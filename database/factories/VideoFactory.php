@@ -17,7 +17,7 @@ class VideoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'path'=>fake()->filePath(),
         ];
     }
 }

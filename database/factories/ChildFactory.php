@@ -17,7 +17,9 @@ class ChildFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'firstname' => fake()->firstName(),
+            'lastname' => fake()->lastName(),
+            'age'=> fake()->numberBetween(int1: 3 ,int2: 14),
         ];
     }
 }
