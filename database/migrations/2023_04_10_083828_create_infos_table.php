@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('infos', function (Blueprint $table) {
             $table->id();
             $table->longText('content');
+            $table->foreignId('group_id')->constrained();
             $table->timestamps();
         });
     }

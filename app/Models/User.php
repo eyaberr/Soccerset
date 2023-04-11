@@ -14,6 +14,12 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ROLES = [
+        'admin' => 1,
+        'trainer' => 2,
+        'parent' => 3
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -43,19 +49,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-     /**
-         * Get the role that owns the User.
-         */
-        public function role(): BelongsTo
-        {
-            return $this->belongsTo(Role::class);
-        }
 
-/**
- * Get the children for the parent.
- */
-public function children(): HasMany
-{
-    return $this->hasMany(Child::class);
-}
+    /**
+     * Get the role that owns the User.
+     */
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Get the children for the parent.
+     */
+    public function children(): HasMany
+    {
+        return $this->hasMany(Child::class);
+    }
 }
