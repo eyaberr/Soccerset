@@ -14,16 +14,21 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(10);
-        return view('users.index', compact('users'));
+        $roles = Role::all();
+        return view('users.index', compact('users', 'roles'));
     }
 
     /**
      * Show the form for creating a new resource.
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
      */
     public function create()
     {
+
         $roles = Role::all();
-        return view('users.create');
+        return view('users.create', [
+            'roles' => $roles,
+        ]);
     }
 
     /**
@@ -36,15 +41,15 @@ class UserController extends Controller
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|string|min:8|max:255',
         ]);
-        $user = new User( [
+        $user = new User([
             'name' => $request->get('name'),
-            'email'=> $request->get('email'),
-            'password'=> $request->get('password'),
+            'email' => $request->get('email'),
+            'password' => $request->get('password'),
         ]);
 
         $user->save();
 
-        return redirect()->route('users.index')->with('success','User has been created successfully.');
+        return redirect()->route('users.index')->with('success', 'User has been created successfully.');
     }
 
     /**
@@ -55,8 +60,8 @@ class UserController extends Controller
         $user = User::find($id);
         $roles = Role::all();
         return view('users.show', [
-            'user' => $user ,
-            'role'=> $roles,
+            'user' => $user,
+            'role' => $roles,
         ]);
     }
 
@@ -66,7 +71,7 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::find($id);
-        return view('users.edit',compact('user'));
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -82,7 +87,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->save();
 
-        return redirect()->route('users.index')->with('success','User Has Been updated successfully');
+        return redirect()->route('users.index')->with('success', 'User Has Been updated successfully');
     }
 
     /**
@@ -91,7 +96,7 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::find($id);
-        $user->delete();
-        return redirect()->route('users.index')->with('success','User has been deleted successfully');
+        $user->where('id', $id)->delete();
+        return redirect()->route('users.index')->with('success', 'User has been deleted successfully');
     }
 }

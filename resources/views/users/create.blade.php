@@ -98,7 +98,9 @@
                     <label>
                         <select name="role" class="form-control">
 
-                            <option value="">Select Role</option>
+                            @foreach($roles as $role)
+                                <option value="{{$role->id}}">{{$role->name}}</option>
+                            @endforeach
                         </select>
                     </label>
 
@@ -111,14 +113,44 @@
                 </div>
 
             </div>
-
             <div class="col-xs-6 col-sm-6 col-md-6">
 
-                <button type="submit" class="btn btn-primary ml-3">Submit</button>
+                <div class="form-group">
 
+                    <strong>User Password:</strong>
+
+                    <input type="password" name="password" class="form-control" placeholder="User Password">
+
+                    @error('password')
+
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+
+                    @enderror
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+
+                <div class="form-group">
+
+                    <strong>Password Confirmation:</strong>
+
+                   <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" id="confirm_password" required>
+
+                    @error('confirm_password')
+
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+
+                    @enderror
+                </div>
             </div>
 
-        </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+
+                    <button type="submit" class="btn btn-primary ml-3">Submit</button>
+
+                </div>
+
+            </div>
 
     </form>
 
