@@ -39,14 +39,15 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
+            'role' => 'required|string|max:255|exists:roles,id',
             'password' => 'required|string|min:8|max:255',
         ]);
         $user = new User([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
+            'role'=> $request ->get('role_id'),
             'password' => $request->get('password'),
         ]);
-
         $user->save();
 
         return redirect()->route('users.index')->with('success', 'User has been created successfully.');
@@ -57,12 +58,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::find($id);
-        $roles = Role::all();
-        return view('users.show', [
-            'user' => $user,
-            'role' => $roles,
-        ]);
+        {
+            $user = User::all();
+            return view('index', compact('user'));
+        }
     }
 
     /**
@@ -82,6 +81,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
+            'role' => 'required|string|max:255|exists:roles,id',
             'password' => 'required|string|min:8|max:255',
         ]);
         $user = User::find($id);
@@ -96,7 +96,10 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::find($id);
-        $user->where('id', $id)->delete();
-        return redirect()->route('users.index')->with('success', 'User has been deleted successfully');
+        if ($user->id =! 1){
+            $user->delete();
+            return redirect()->route('users.index')->with('success', 'User has been deleted successfully');
+        }
+
     }
 }
