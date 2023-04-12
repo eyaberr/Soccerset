@@ -26,9 +26,7 @@ class UserController extends Controller
     {
 
         $roles = Role::all();
-        return view('users.create', [
-            'roles' => $roles,
-        ]);
+        return view('users.create', compact('roles'));
     }
 
     /**
@@ -59,8 +57,9 @@ class UserController extends Controller
     public function show(string $id)
     {
         {
-            $user = User::all();
-            return view('index', compact('user'));
+            $users = User::all();
+            $roles = Role::all();
+            return view('users.index', compact('users','roles'));
         }
     }
 
@@ -70,7 +69,8 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::find($id);
-        return view('users.edit', compact('user'));
+        $roles = Role::all();
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -96,7 +96,7 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::find($id);
-        if ($user->id =! 1){
+        if ($user){
             $user->delete();
             return redirect()->route('users.index')->with('success', 'User has been deleted successfully');
         }

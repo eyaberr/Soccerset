@@ -78,9 +78,8 @@
                         @csrf
 
                         @method('DELETE')
- @if($user->id !== '1')
+
                         <button type="submit" class="btn btn-danger">Delete</button>
-@endif
 
                     </form>
 
@@ -92,7 +91,7 @@
 
     </table>
 
-{!! $users->links() !!}
-
+    {!! $users->links() !!}
+</div>
 </body>
 </html>

@@ -134,7 +134,8 @@
 
                     <strong>Password Confirmation:</strong>
 
-                   <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" id="confirm_password" required>
+                    <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password"
+                           id="confirm_password" required>
 
                     @error('confirm_password')
 
@@ -144,15 +145,16 @@
                 </div>
             </div>
 
-                <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="col-xs-6 col-sm-6 col-md-6">
 
-                    <button type="submit" class="btn btn-primary ml-3">Submit</button>
-
-                </div>
+                <button type="submit" class="btn btn-primary ml-3">Submit</button>
 
             </div>
 
+        </div>
+
     </form>
+</div>
 
 </body>
 

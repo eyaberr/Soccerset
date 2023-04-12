@@ -7,6 +7,27 @@
 </head>
 <body>
 <div class="push-top">
+    <div class="container mt-2">
+
+        <div class="row">
+
+            <div class="col-lg-12 margin-tb">
+
+                <div class="pull-left mb-2">
+
+                    <h2>Edit & Update User</h2>
+
+                </div>
+
+                <div class="pull-right">
+
+                    <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
+
+                </div>
+
+            </div>
+
+        </div>
     @if(session()->get('success'))
         <div class="alert alert-success">
             {{ session()->get('success') }}
@@ -18,22 +39,18 @@
             <td>ID</td>
             <td>Name</td>
             <td>Email</td>
-            <td>Phone</td>
-            <td>Password</td>
-            <td class="text-center">Action</td>
+
         </tr>
         </thead>
         <tbody>
-        @foreach($student as $students)
+        @foreach($user as $users)
             <tr>
-                <td>{{$students->id}}</td>
-                <td>{{$students->name}}</td>
-                <td>{{$students->email}}</td>
-                <td>{{$students->phone}}</td>
-                <td>{{$students->password}}</td>
+                <td>{{$users->id}}</td>
+                <td>{{$users->name}}</td>
+                <td>{{$users->email}}</td>
                 <td class="text-center">
-                    <a href="{{ route('students.edit', $students->id)}}" class="btn btn-primary btn-sm"">Edit</a>
-                    <form action="{{ route('students.destroy', $students->id)}}" method="post" style="display: inline-block">
+                    <a href="{{ route('users.edit', $users->id)}}" class="btn btn-primary btn-sm"">Edit</a>
+                    <form action="{{ route('users.destroy', $users->id)}}" method="post" style="display: inline-block">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm"" type="submit">Delete</button>
@@ -43,6 +60,6 @@
         @endforeach
         </tbody>
     </table>
-    <div>
+    </div>
 </body>
 </html>
