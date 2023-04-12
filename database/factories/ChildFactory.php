@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,9 +17,11 @@ class ChildFactory extends Factory
      */
     public function definition(): array
     {
+        $user = User::inRandomOrder()->first(); // Retrieve a random user
         return [
             'firstname' => fake()->firstName(),
             'lastname' => fake()->lastName(),
+            'user_id'=> $user->id, // Retrieve the ID of the associated user
             'age'=> fake()->numberBetween(int1: 3 ,int2: 14),
         ];
     }

@@ -34,10 +34,13 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-         \App\Models\User::factory()->create([
-             'name' => 'Test User',
-             'email' => 'test@example.com',
-             'role_id' => \App\Models\User::ROLES["admin"]
-         ]);
+        \App\Models\User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'role_id' => \App\Models\User::ROLES["admin"]
+        ]);
+        $this->call([
+        ChildSeeder::class,
+        ]);
     }
 }
