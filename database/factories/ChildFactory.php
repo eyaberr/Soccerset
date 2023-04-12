@@ -17,7 +17,7 @@ class ChildFactory extends Factory
      */
     public function definition(): array
     {
-        $user = User::inRandomOrder()->first(); // Retrieve a random user
+        $user=User::latest()->first() ;// Retrieve a random user
         return [
             'firstname' => fake()->firstName(),
             'lastname' => fake()->lastName(),

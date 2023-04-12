@@ -13,8 +13,10 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $children = Child::paginate(10);
-        return view('children.index', compact('children'));
+        $children = Child::paginate(5);
+        $user = User::all();
+        return view('children.index', compact('children', 'user'));
+
     }
 
     /**
@@ -22,7 +24,8 @@ class ChildController extends Controller
      */
     public function create()
     {
-        return view('children.index');
+        $users=User::all();
+        return view('children.index',compact('users'));
     }
 
     /**
@@ -42,6 +45,7 @@ class ChildController extends Controller
             'parent' => $request->get('user_id'),
             'age' => $request->get('age'),
         ]);
+
         $child->save();
 
         return redirect()->route('children.index')->with('success', 'Child has been created successfully.');
