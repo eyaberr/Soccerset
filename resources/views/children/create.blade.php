@@ -95,14 +95,11 @@
 
                     <strong>Parent:</strong>
 
-                    <label>
-                        <select name="parent" class="form-control">
-
-                            @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->name}}</option>
-                            @endforeach
-                        </select>
-                    </label>
+                    <select name="parent" class="form-control">
+                        @foreach($users as $user)
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                        @endforeach
+                    </select>
 
                     @error('user')
 

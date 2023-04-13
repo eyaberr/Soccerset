@@ -9,11 +9,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Child extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'firstname',
+        'lastname',
+        'age',
+        'user_id'
+    ];
     use HasFactory;
     /**
      * Get the parent that owns the child.
      */
-    public function users(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

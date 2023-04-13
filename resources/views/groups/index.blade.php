@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>children</title>
+    <title>Groups</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -15,13 +15,13 @@
 
             <div class="pull-left">
 
-                <h2>Children Space</h2>
+                <h2>Groups Space</h2>
 
             </div>
 
             <div class="pull-right mb-2">
 
-                <a class="btn btn-success" href="{{ route('children.create') }}"> ADD CHILD</a>
+                <a class="btn btn-success" href="{{ route('groups.create') }}"> ADD GROUP</a>
 
             </div>
 
@@ -45,41 +45,36 @@
 
             <th>#</th>
 
-            <th>FirstName</th>
+            <th>Name</th>
 
-            <th>LastName</th>
+            <th>Number Of Players</th>
 
-            <th>Parent</th>
-
-            <th>Age</th>
 
 
         </tr>
 
-        @foreach ($children as $child)
+        @foreach ($groups as $group)
 
 
             <tr>
 
-                <td>{{ $child->id }}</td>
+                <td>{{ $group->id }}</td>
 
-                <td>{{ $child->firstname }} </td>
+                <td>{{ $group->name }} </td>
 
-                <td>{{ $child->lastname }}</td>
+                <td>{{ $group->number_of_players }}</td>
 
-                <td>{{ $child->user->name }}</td>
 
-                <td>{{ $child->age }}</td>
 
 
                 <td>
 
 
-                    <form action="{{ route('children.destroy',$child->id) }}" method="Post">
+                    <form action="{{ route('groups.destroy',$group->id) }}" method="Post">
 
-                        <a class="btn btn-primary" href="{{ route('children.show',$child->id) }}">show</a>
+                        <a class="btn btn-primary" href="{{ route('groups.show',$group->id) }}">show</a>
 
-                        <a class="btn btn-primary" href="{{ route('children.edit',$child->id) }}">Edit</a>
+                        <a class="btn btn-primary" href="{{ route('groups.edit',$group->id) }}">Edit</a>
 
                         @csrf
 

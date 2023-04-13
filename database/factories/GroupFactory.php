@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Child;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,7 @@ class GroupFactory extends Factory
     {
         return [
             'name'=> fake()->name(),
-            'number_of_players'=> fake()->randomNumber(),
+            'number_of_players'=> fake()->numberBetween(int1: 8 ,int2: 11),
         ];
     }
 }

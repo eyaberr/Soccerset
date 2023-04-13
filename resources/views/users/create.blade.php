@@ -58,7 +58,7 @@
 
                     <strong>Name:</strong>
 
-                    <input type="text" name="name" class="form-control" placeholder="Name">
+                    <input type="text" name="name" value="{{ old("name") }}" class="form-control" placeholder="Name">
 
                     @error('name')
 
@@ -77,7 +77,8 @@
 
                     <strong>User Email:</strong>
 
-                    <input type="email" name="email" class="form-control" placeholder="User Email">
+                    <input type="email" name="email" value="{{ old("email") }}" class="form-control"
+                           placeholder="User Email">
 
                     @error('email')
 
@@ -95,16 +96,13 @@
 
                     <strong>Role:</strong>
 
-                    <label>
-                        <select name="role" class="form-control">
+                    <select name="role_id" class="form-control">
+                        @foreach($roles as $role)
+                            <option value="{{$role->id}}">{{$role->name}}</option>
+                        @endforeach
+                    </select>
 
-                            @foreach($roles as $role)
-                                <option value="{{$role->id}}">{{$role->name}}</option>
-                            @endforeach
-                        </select>
-                    </label>
-
-                    @error('role')
+                    @error('role_id')
 
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
 

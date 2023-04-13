@@ -14,9 +14,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(10);
-        $roles = Role::all();
-        return view('users.index', ['users' => $users, 'roles' => $roles]);
-
+        return view('users.index', ['users' => $users]);
     }
 
     /**
@@ -25,7 +23,6 @@ class UserController extends Controller
      */
     public function create()
     {
-
         $roles = Role::all();
         return view('users.create', compact('roles'));
     }
@@ -38,7 +35,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
-            'role_id' => 'required|string|max:255|exists:roles,id',
+            'role_id' => 'required|exists:roles,id',
             'password' => 'required|string|min:8|max:255',
         ]);
         $user = new User([
@@ -56,14 +53,10 @@ class UserController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-
-     {
-         $user = User::find($id);
-         if (!$user) {
-             abort(404);
-         }
-         return view('users.show', compact('user'));
-     }
+    {
+        $user = User::findOrFail($id);
+        return view('users.show', compact('user'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -82,8 +75,8 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$id.'|max:255',
-            'role_id' => 'required|string|max:255|exists:roles,id',
+            'email' => 'required|email|unique:users,email,' . $id . '|max:255',
+            'role_id' => 'required|exists:roles,id',
             'password' => 'required|string|min:8|max:255',
         ]);
 
@@ -107,6 +100,5 @@ class UserController extends Controller
             $user->delete();
             return redirect()->route('users.index')->with('success', 'User has been deleted successfully');
         }
-
     }
 }

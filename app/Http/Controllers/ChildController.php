@@ -13,10 +13,8 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $children = Child::paginate(5);
-        $user = User::all();
-        return view('children.index', compact('children', 'user'));
-
+        $children = Child::with('user')->paginate(10);
+        return view('children.index', compact('children'));
     }
 
     /**
@@ -24,8 +22,8 @@ class ChildController extends Controller
      */
     public function create()
     {
-        $users=User::all();
-        return view('children.index',compact('users'));
+        $users = User::ofRole(User::ROLES['parent'])->get();
+        return view('children.create', compact('users'));
     }
 
     /**
@@ -39,10 +37,11 @@ class ChildController extends Controller
             'parent' => 'required|string|max:255|exists:users,id',
             'age' => 'required|string|max:255',
         ]);
+
         $child = new Child([
             'firstname' => $request->get('firstname'),
             'lastname' => $request->get('lastname'),
-            'parent' => $request->get('user_id'),
+            'user_id' => $request->get('parent'),
             'age' => $request->get('age'),
         ]);
 
@@ -56,17 +55,18 @@ class ChildController extends Controller
      */
     public function show(string $id)
     {
-        $users = User::all();
-        return view('children.create', compact('users'));
+        $child = Child::find($id);
+        return view('children.show', compact('child'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
+
     {
         $child = Child::find($id);
-        $users = User::all();
+        $users = User::ofRole(User::ROLES['parent'])->get();
         return view('children.edit', compact('child', 'users'));
     }
 
@@ -80,12 +80,16 @@ class ChildController extends Controller
             'lastname' => 'required|string|max:255',
             'parent' => 'required|string|max:255|exists:users,id',
             'age' => 'required|string|max:255',
-
         ]);
+
         $child = Child::find($id);
+        $child->firstname = $request->get('firstname');
+        $child->lastname = $request->get('lastname');
+        $child->user_id = $request->get('user');
+        $child->age = $request->get('age');
         $child->save();
 
-        return redirect()->route('children.index')->with('success', 'Child Has Been updated successfully');
+        return redirect()->route('children.index')->with('success', 'Child has been updated successfully.');
     }
 
     /**
@@ -96,7 +100,7 @@ class ChildController extends Controller
         $child = Child::find($id);
         if ($child) {
             $child->delete();
-            return redirect()->route('children.index')->with('success', 'Child has been deleted successfully');
+            return redirect()->route('children.index')->with('success', 'Child has been deleted successfully.');
         }
     }
 }

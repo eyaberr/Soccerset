@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -29,7 +30,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-
+        'role_id'
     ];
 
     /**
@@ -66,5 +67,13 @@ class User extends Authenticatable
     public function children(): HasMany
     {
         return $this->hasMany(Child::class);
+    }
+
+    /**
+     * Scope a query to only include users of a given role_id.
+     */
+    public function scopeOfRole(Builder $query, int $roleId): void
+    {
+        $query->where('role_id', $roleId);
     }
 }
