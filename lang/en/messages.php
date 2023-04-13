@@ -17,5 +17,14 @@ return [
     'user_confirm_password'=>'Password Confirmation',
     'submit_button'=>'Submit',
     'show_user_title'=>'Show User',
+    'user_new_password'=>'New Password',
+    'user_confirm_new_password'=>'New Password Confirmation',
+    'update_button'=>'Update User',
+    'children_space_title'=>'CHILDREN SPACE',
+    'add_child_title'=>'ADD CHILD',
+    'child_first_name'=>'FirstName',
+    'child_last_name'=>'LastName',
+    'child_parent'=>'Parent',
+    'child_age'=>'Age',
 
 ];
