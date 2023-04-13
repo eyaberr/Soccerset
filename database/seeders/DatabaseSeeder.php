@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => \App\Models\User::ROLES["admin"]
         ]);
         $this->call([
-        ChildSeeder::class,
+            ChildSeeder::class,
         ]);
     }
 }

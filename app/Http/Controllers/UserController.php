@@ -15,7 +15,8 @@ class UserController extends Controller
     {
         $users = User::paginate(10);
         $roles = Role::all();
-        return view('users.index', compact('users', 'roles'));
+        return view('users.index', ['users' => $users, 'roles' => $roles]);
+
     }
 
     /**
@@ -37,13 +38,13 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
-            'role' => 'required|string|max:255|exists:roles,id',
+            'role_id' => 'required|string|max:255|exists:roles,id',
             'password' => 'required|string|min:8|max:255',
         ]);
         $user = new User([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
-            'role'=> $request ->get('role_id'),
+            'role_id' => $request->get('role_id'),
             'password' => $request->get('password'),
         ]);
         $user->save();
@@ -55,13 +56,14 @@ class UserController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        {
-            $users = User::all();
-            $roles = Role::all();
-            return view('users.index', compact('users','roles'));
-        }
-    }
+
+     {
+         $user = User::find($id);
+         if (!$user) {
+             abort(404);
+         }
+         return view('users.show', compact('user'));
+     }
 
     /**
      * Show the form for editing the specified resource.
@@ -80,14 +82,19 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users|max:255',
-            'role' => 'required|string|max:255|exists:roles,id',
+            'email' => 'required|email|unique:users,email,'.$id.'|max:255',
+            'role_id' => 'required|string|max:255|exists:roles,id',
             'password' => 'required|string|min:8|max:255',
         ]);
+
         $user = User::find($id);
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->role_id = $request->get('role_id');
+        $user->password = $request->get('password');
         $user->save();
 
-        return redirect()->route('users.index')->with('success', 'User Has Been updated successfully');
+        return redirect()->route('users.index')->with('success', 'User has been updated successfully.');
     }
 
     /**
@@ -96,7 +103,7 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::find($id);
-        if ($user){
+        if ($user) {
             $user->delete();
             return redirect()->route('users.index')->with('success', 'User has been deleted successfully');
         }
