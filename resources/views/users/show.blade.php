@@ -59,7 +59,8 @@
 
             <th>{{__('messages.user_role')}}</th>
 
-            @if ($user->id !== 1)<th>{{__('messages.user_password')}}</th>@endif
+            @if ($user->id !== 1)
+                <th>{{__('messages.user_password')}}</th>@endif
 
         </tr>
 
@@ -73,7 +74,8 @@
 
             <td>{{ $user->role->name }}</td>
 
-            @if ($user->id !== 1) <td>{{ $user->password }}</td>>@endif
+            @if ($user->id !== 1)
+                <td>{{ $user->password }}</td>>@endif
         </tr>
 
     </table>

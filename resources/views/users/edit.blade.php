@@ -59,13 +59,13 @@
             <div class="form-group">
                 @csrf
                 @method('PATCH')
-                <strong>Name:</strong>
+                <strong>{{__('messages.user_name')}}:</strong>
                 <input type="text" class="form-control" name="name" value="{{ $user->name }}"/>
             </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
-                <strong>Email:</strong>
+                <strong>{{__('messages.user_email')}}:</strong>
 
                 <input type="email" class="form-control" name="email" value="{{ $user->email }}"/>
             </div>
@@ -74,7 +74,7 @@
 
                 <div class="form-group">
 
-                    <strong>Role:</strong>
+                    <strong>{{__('messages.user_role')}}:</strong>
                     <select name="role_id" class="form-control">
 
                         @foreach($roles as $role)
@@ -97,7 +97,7 @@
 
                 <div class="form-group">
 
-                    <strong>New Password:</strong>
+                    <strong>{{__('messages.user_new_password')}}:</strong>
 
                     <input type="password" name="password" placeholder="New Password" class="form-control" value="">
 
@@ -112,7 +112,7 @@
 
                 <div class="form-group">
 
-                    <strong>New Password Confirmation:</strong>
+                    <strong>{{__('messages.user_confirm_new_password')}}:</strong>
 
                     <input type="password" name="password_confirmation" placeholder="New Password Confirmation" class="form-control" value="">
 
@@ -125,7 +125,7 @@
             </div>
 
 
-            <button type="submit" class="btn btn-primary ml-3">Update User</button>
+            <button type="submit" class="btn btn-primary ml-3">{{__('messages.update_button')}}:</button>
         </form>
     </div>
 </div>
