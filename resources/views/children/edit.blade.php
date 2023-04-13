@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
 
-    <title>modify child</title>
+    <title>{{__('messages.edit_child_title')}}</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -22,13 +22,13 @@
 
             <div class="pull-left mb-2">
 
-                <h2>Edit & Update Child</h2>
+                <h2>{{__('messages.edit_child_title')}}</h2>
 
             </div>
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('children.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('children.index') }}">{{__('messages.back_button')}}</a>
 
             </div>
 
@@ -50,14 +50,14 @@
             <div class="form-group">
                 @csrf
                 @method('PATCH')
-                <strong>FirstName</strong>
+                <strong>{{__('messages.child_first_name')}}:</strong>
 
                 <input type="text" class="form-control" name="firstname" value="{{ $child->firstname }}"/>
             </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
-                <strong>LastName</strong>
+                <strong>{{__('messages.child_last_name')}}:</strong>
                 <input type="text" class="form-control" name="lastname" value="{{ $child->lastname }}"/>
             </div>
             </div>
@@ -65,7 +65,7 @@
 
                 <div class="form-group">
 
-                    <strong>Parent:</strong>
+                    <strong>{{__('messages.child_parent')}}:</strong>
 
 
                         <select name="parent" class="form-control">
@@ -87,13 +87,13 @@
             <div class="col-xs-6 col-sm-6 col-md-6">
                 <div class="form-group">
 
-                    <strong>Age</strong>
+                    <strong>{{__('messages.child_age')}}:</strong>
 
                     <input type="number" class="form-control" name="age" value="{{ $child->age }}"/>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary ml-3">Update User</button>
+            <button type="submit" class="btn btn-primary ml-3">{{__('messages.update_button')}}</button>
         </form>
     </div>
 </div>

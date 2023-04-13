@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Groups</title>
+    <title>{{__('messages.groups_space_title')}}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -15,13 +15,13 @@
 
             <div class="pull-left">
 
-                <h2>Groups Space</h2>
+                <h2>{{__('messages.groups_space_title')}}</h2>
 
             </div>
 
             <div class="pull-right mb-2">
 
-                <a class="btn btn-success" href="{{ route('groups.create') }}"> ADD GROUP</a>
+                <a class="btn btn-success" href="{{ route('children.create') }}"> {{__('messages.add_group_title')}}</a>
 
             </div>
 
@@ -43,17 +43,17 @@
 
         <tr>
 
-            <th>#</th>
 
-            <th>Name</th>
+            <th>{{__('messages.user_id')}}</th>
+
+            <th>{{__('messages.user_name')}}</th>
 
             <th>Number Of Players</th>
 
 
-
         </tr>
 
-        @foreach ($groups as $group)
+        @foreach ($children as $child)
 
 
             <tr>
@@ -65,22 +65,20 @@
                 <td>{{ $group->number_of_players }}</td>
 
 
-
-
                 <td>
 
 
-                    <form action="{{ route('groups.destroy',$group->id) }}" method="Post">
+                    <form action="{{ route('children.destroy',$child->id) }}" method="Post">
 
-                        <a class="btn btn-primary" href="{{ route('groups.show',$group->id) }}">show</a>
+                        <a class="btn btn-primary" href="{{ route('children.show',$child->id) }}">{{__('messages.show_button')}}</a>
 
-                        <a class="btn btn-primary" href="{{ route('groups.edit',$group->id) }}">Edit</a>
+                        <a class="btn btn-primary" href="{{ route('children.edit',$child->id) }}">{{__('messages.edit_button')}}</a>
 
                         @csrf
 
                         @method('DELETE')
 
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">{{__('messages.delete_button')}}</button>
 
                     </form>
 

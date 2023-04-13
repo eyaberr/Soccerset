@@ -51,15 +51,15 @@
 
         <tr>
 
-            <th>#</th>
+            <th>{{__('messages.user_id')}}</th>
 
-            <th>FirstName</th>
+            <th>{{__('messages.child_first_name')}}</th>
 
-            <th>LastName</th>
+            <th>{{__('messages.child_last_name')}}</th>
 
-            <th>Parent</th>
+            <th>{{__('messages.child_parent')}}</th>
 
-            <th>Age</th>
+            <th>{{__('messages.child_age')}}</th>
 
         </tr>
 

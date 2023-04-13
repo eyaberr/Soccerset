@@ -19,12 +19,15 @@ return [
     'show_user_title'=>'Show User',
     'user_new_password'=>'New Password',
     'user_confirm_new_password'=>'New Password Confirmation',
-    'update_button'=>'Update User',
+    'update_button'=>'Update',
     'children_space_title'=>'CHILDREN SPACE',
     'add_child_title'=>'ADD CHILD',
     'child_first_name'=>'FirstName',
     'child_last_name'=>'LastName',
     'child_parent'=>'Parent',
     'child_age'=>'Age',
-
+    'create_child_title'=>'CREATE CHILD',
+    'show_child_title'=>'Show Child',
+    'edit_child_title' => 'Edit & Update Child',
+    'group_players_number'=>'Number Of Players',
 ];

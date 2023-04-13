@@ -125,7 +125,7 @@
             </div>
 
 
-            <button type="submit" class="btn btn-primary ml-3">{{__('messages.update_button')}}:</button>
+            <button type="submit" class="btn btn-primary ml-3">{{__('messages.update_button')}}</button>
         </form>
     </div>
 </div>
