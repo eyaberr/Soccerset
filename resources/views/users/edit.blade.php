@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
 
-    <title>modify user</title>
+    <title>{{__('messages.edit_user_title')}}</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -22,13 +22,13 @@
 
             <div class="pull-left mb-2">
 
-                <h2>Edit & Update User</h2>
+                <h2>{{ __('messages.edit_user_title') }}</h2>
 
             </div>
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('users.index') }}"> {{ __('messages.back_button') }}</a>
 
             </div>
 
@@ -45,33 +45,46 @@
                 </ul>
             </div><br/>
         @endif
+            @if(session('errors'))
+
+                <div class="alert alert-success mb-1 mt-1">
+
+                    {{ session('errors') }}
+
+                </div>
+
+            @endif
         <form method="post" action="{{ route('users.update', $user->id) }}">
+            <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
                 @csrf
                 @method('PATCH')
-                <label for="name">Name</label>
+                <strong>Name:</strong>
                 <input type="text" class="form-control" name="name" value="{{ $user->name }}"/>
             </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
-                <label for="email">Email</label>
+                <strong>Email:</strong>
+
                 <input type="email" class="form-control" name="email" value="{{ $user->email }}"/>
+            </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
 
                 <div class="form-group">
 
                     <strong>Role:</strong>
+                    <select name="role_id" class="form-control">
 
-                    <label>
-                        <select name="role" class="form-control">
+                        @foreach($roles as $role)
+                            <option value="{{ $role->id }}" {{ $role->id == old('role_id', $user->role_id) ? 'selected' : '' }}>
+                                {{ $role->name }}
+                            </option>
+                        @endforeach
+                    </select>
 
-                            @foreach($roles as $role)
-                                <option value="{{$role->id}}">{{$role->name}}</option>
-                            @endforeach
-                        </select>
-                    </label>
-
-                    @error('role')
+                    @error('role_id')
 
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
 
@@ -79,6 +92,36 @@
 
                 </div>
 
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+
+                <div class="form-group">
+
+                    <strong>New Password:</strong>
+
+                    <input type="password" name="password" placeholder="New Password" class="form-control" value="">
+
+                    @error('password')
+
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+
+                    @enderror
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+
+                <div class="form-group">
+
+                    <strong>New Password Confirmation:</strong>
+
+                    <input type="password" name="password_confirmation" placeholder="New Password Confirmation" class="form-control" value="">
+
+                    @error('password_confirmation')
+
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+
+                    @enderror
+                </div>
             </div>
 
 

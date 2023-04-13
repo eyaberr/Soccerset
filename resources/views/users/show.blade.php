@@ -1,67 +1,83 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>users</title>
+
+    <title>{{__('messages.show_user_title')}}</title>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
+
 <body>
-<div class="push-top">
-    <div class="container mt-2">
 
-        <div class="row">
+<div class="container mt-2">
 
-            <div class="col-lg-12 margin-tb">
+    <div class="row">
 
-                <div class="pull-left mb-2">
+        <div class="col-lg-12 margin-tb">
 
-                    <h2>Show User</h2>
+            <div class="pull-left">
 
-                </div>
-
-                <div class="pull-right">
-
-                    <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
-
-                </div>
+                <h2>{{__('messages.show_user_title')}}</h2>
 
             </div>
 
-        </div>
-        @if(session()->get('success'))
-            <div class="alert alert-success">
-                {{ session()->get('success') }}
-            </div><br/>
-        @endif
-        <table class="table">
-            <thead>
-            <tr class="table-warning">
-                <td>ID</td>
-                <td>Name</td>
-                <td>Email</td>
+            <div class="pull-right">
 
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($user as $users)
-                <tr>
-                    <td>{{$users->id}}</td>
-                    <td>{{$users->name}}</td>
-                    <td>{{$users->email}}</td>
-                    <td class="text-center">
-                        <a href="{{ route('users.edit', $users->id)}}" class="btn btn-primary btn-sm">Edit</a>
-                        <form action="{{ route('users.destroy', $users->id)}}" method="post"
-                              style="display: inline-block">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
+                <a class="btn btn-primary" href="{{ route('users.index') }}"> {{__('messages.back_button')}}</a>
+
+            </div>
+            </br>
+
+        </div>
+
     </div>
+
+    @if ($message = Session::get('success'))
+
+        <div class="alert alert-success">
+
+            <p>{{ $message }}</p>
+
+        </div>
+
+    @endif
+
+    <table class="table table-bordered">
+
+        <tr>
+
+            <th>{{__('messages.user_id')}}</th>
+
+            <th>{{__('messages.user_name')}}</th>
+
+            <th>{{__('messages.user_email')}}</th>
+
+            <th>{{__('messages.user_role')}}</th>
+
+            @if ($user->id !== 1)<th>{{__('messages.user_password')}}</th>@endif
+
+        </tr>
+
+        <tr>
+
+            <td>{{ $user->id }}</td>
+
+            <td> {{$user->name }}</td>
+
+            <td>{{ $user->email }}</td>
+
+            <td>{{ $user->role->name }}</td>
+
+            @if ($user->id !== 1) <td>{{ $user->password }}</td>>@endif
+        </tr>
+
+    </table>
 </div>
 </body>
+
 </html>

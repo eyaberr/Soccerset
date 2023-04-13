@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>users</title>
+    <title>USERS SPACE</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -15,13 +15,13 @@
 
             <div class="pull-left">
 
-                <h2>Users</h2>
+                <h2>{{__('messages.users_space_title')}}</h2>
 
             </div>
 
             <div class="pull-right mb-2">
 
-                <a class="btn btn-success" href="{{ route('users.create') }}"> ADD USER</a>
+                <a class="btn btn-success" href="{{ route('users.create') }}"> {{__('messages.add_user_title')}}</a>
 
             </div>
 
@@ -43,13 +43,13 @@
 
         <tr>
 
-            <th>#</th>
+            <th>{{__('messages.user_id')}}</th>
 
-            <th>Name</th>
+            <th>{{__('messages.user_name')}}</th>
 
-            <th>Email</th>
+            <th>{{__('messages.user_email')}}</th>
 
-            <th>Role</th>
+            <th>{{__('messages.user_role')}}</th>
 
 
         </tr>
@@ -71,16 +71,16 @@
 
                     <form action="{{ route('users.destroy',$user->id) }}" method="Post">
 
-                        <a class="btn btn-primary" href="{{ route('users.show',$user->id) }}">show</a>
+                        <a class="btn btn-primary" href="{{ route('users.show',$user->id) }}">{{__('messages.show_button')}}</a>
 
-                        <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
+                        <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">{{__('messages.edit_button')}}</a>
 
                         @csrf
 
                         @method('DELETE')
-
-                        <button type="submit" class="btn btn-danger">Delete</button>
-
+                        @if($user->id !== 1 )
+                            <button type="submit" class="btn btn-danger">{{__('messages.delete_button')}}</button>
+                        @endif
                     </form>
 
                 </td>

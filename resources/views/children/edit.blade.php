@@ -46,15 +46,20 @@
             </div><br/>
         @endif
         <form method="post" action="{{ route('children.update', $child->id) }}">
+            <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
                 @csrf
                 @method('PATCH')
-                <label for="firstname">FirstName</label>
+                <strong>FirstName</strong>
+
                 <input type="text" class="form-control" name="firstname" value="{{ $child->firstname }}"/>
             </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
-                <label for="lastname">LastName</label>
+                <strong>LastName</strong>
                 <input type="text" class="form-control" name="lastname" value="{{ $child->lastname }}"/>
+            </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
 
@@ -62,14 +67,13 @@
 
                     <strong>Parent:</strong>
 
-                    <label>
+
                         <select name="parent" class="form-control">
 
                             @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->name}}</option>
+                                <option value="{{$user->id}}" {{ $user->id == old('user_id', $child->user_id) ? 'selected' : '' }}>{{$user->name}}</option>
                             @endforeach
                         </select>
-                    </label>
 
                     @error('parent')
 
@@ -79,6 +83,14 @@
 
                 </div>
 
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
+
+                    <strong>Age</strong>
+
+                    <input type="number" class="form-control" name="age" value="{{ $child->age }}"/>
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary ml-3">Update User</button>
