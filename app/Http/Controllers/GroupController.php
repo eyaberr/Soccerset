@@ -13,10 +13,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::all();
-        $children = Child::all();
-
-        return view('groups.index', compact('children', 'groups'));
+        $groups= Group::paginate(10);
+        return view('groups.index', compact('groups'));
     }
 
     /**
@@ -57,17 +55,7 @@ class GroupController extends Controller
     public function show(string $id)
     {
         $group = Group::with('children')->find($id);
-
-        if ($group) {
-            $children = $group->children;
-            // do something with $children, for example:
-            return view('groups.children', compact('group', 'children'));
-        } else {
-            // handle the case where the group does not exist, for example:
-            return redirect()->route('groups.index')->with('error', 'Group not found');
-        }
-
-
+        return view('groups.show', compact('group'));
     }
 
     /**
@@ -79,7 +67,7 @@ class GroupController extends Controller
     {
         $group = Group::find($id);
         $children = Child::all();
-        return view('children.edit', compact('group', 'children'));
+        return view('groups.edit', compact('group', 'children'));
     }
 
     /**
@@ -90,7 +78,7 @@ class GroupController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'number_of_players' => 'required|string|max:255',
-            'children' => 'required|string|max:255|exists:users,id',
+            'children' => 'required|string|max:255|exists:children,id',
         ]);
         $group = Group::find($id);
         $group->name = $request->get('name');

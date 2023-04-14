@@ -17,9 +17,11 @@ class GroupFactory extends Factory
      */
     public function definition(): array
     {
+        $children = Child::all();
         return [
-            'name'=> fake()->name(),
-            'number_of_players'=> fake()->numberBetween(int1: 8 ,int2: 11),
+            'name' => fake()->name(),
+            'number_of_players' => fake()->numberBetween(int1: 8, int2: 11),
+            'children' => $children->id,
         ];
     }
 }

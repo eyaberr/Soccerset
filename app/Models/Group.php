@@ -9,6 +9,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Group extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'number_of_players',
+        'child_id'
+    ];
+
     use HasFactory;
     /**
      * The childre that belong to the group.

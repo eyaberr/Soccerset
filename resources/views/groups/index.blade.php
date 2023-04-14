@@ -21,7 +21,7 @@
 
             <div class="pull-right mb-2">
 
-                <a class="btn btn-success" href="{{ route('children.create') }}"> {{__('messages.add_group_title')}}</a>
+                <a class="btn btn-success" href="{{ route('groups.create') }}"> {{__('messages.add_group_title')}}</a>
 
             </div>
 
@@ -48,12 +48,14 @@
 
             <th>{{__('messages.user_name')}}</th>
 
-            <th>Number Of Players</th>
+            <th>{{__('messages.group_players_number')}}</th>
+
+            <th>{{__('messages.children_list')}}</th>
 
 
         </tr>
 
-        @foreach ($children as $child)
+        @foreach ($groups as $group)
 
 
             <tr>
@@ -64,15 +66,21 @@
 
                 <td>{{ $group->number_of_players }}</td>
 
+                <td> @foreach($group->children as $child)
+                        {{$group->child->firstname}} {{$group->child->lastname}}
+                    @endforeach</td>
+
 
                 <td>
 
 
-                    <form action="{{ route('children.destroy',$child->id) }}" method="Post">
+                    <form action="{{ route('groups.destroy',$group->id) }}" method="Post">
 
-                        <a class="btn btn-primary" href="{{ route('children.show',$child->id) }}">{{__('messages.show_button')}}</a>
+                        <a class="btn btn-primary"
+                           href="{{ route('groups.show',$group->id) }}">{{__('messages.show_button')}}</a>
 
-                        <a class="btn btn-primary" href="{{ route('children.edit',$child->id) }}">{{__('messages.edit_button')}}</a>
+                        <a class="btn btn-primary"
+                           href="{{ route('groups.edit',$group->id) }}">{{__('messages.edit_button')}}</a>
 
                         @csrf
 
