@@ -32,5 +32,15 @@ return [
     'group_players_number' => 'Number Of Players',
     'groups_space_title' => 'Group Space',
     'add_group_title' => 'ADD GROUP',
-    'children_list' => 'Children List'
-];
+    'children_list' => 'Children List',
+    'child_successfully_updated' => 'Child has been updated successfully.',
+    'group_successfully_updated' => 'Group has been updated successfully.',
+    'child_successfully_created' => 'Child has been created successfully.',
+    'group_successfully_created' => 'Group has been created successfully.',
+    'child_successfully_deleted' => 'Child has been deleted successfully.',
+    'group_successfully_deleted' => 'Group has been deleted successfully.',
+    'edit_group_title'=> 'Edit Group',
+    'group_name'=>'Group Name',
+    'group_players'=>'Number Of Players',
+
+    ];

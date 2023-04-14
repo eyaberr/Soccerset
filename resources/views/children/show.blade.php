@@ -28,7 +28,7 @@
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('children.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('children.index') }}"> {{__('messages.back_button')}}</a>
 
             </div>
             </br>

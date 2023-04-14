@@ -66,11 +66,11 @@
 
                 <td>{{ $group->number_of_players }}</td>
 
-                <td> @foreach($group->children as $child)
-                        {{$group->child->firstname}} {{$group->child->lastname}}
-                    @endforeach</td>
-
-
+                <td>
+                    @foreach($group->children as $child)
+                        {{ $child->firstname}} {{ $child->lastname}}
+                    @endforeach
+                </td>
                 <td>
 
 

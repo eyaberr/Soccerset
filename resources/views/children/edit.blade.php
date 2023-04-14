@@ -47,19 +47,19 @@
         @endif
         <form method="post" action="{{ route('children.update', $child->id) }}">
             <div class="col-xs-6 col-sm-6 col-md-6">
-            <div class="form-group">
-                @csrf
-                @method('PATCH')
-                <strong>{{__('messages.child_first_name')}}:</strong>
+                <div class="form-group">
+                    @csrf
+                    @method('PATCH')
+                    <strong>{{__('messages.child_first_name')}}:</strong>
 
-                <input type="text" class="form-control" name="firstname" value="{{ $child->firstname }}"/>
-            </div>
+                    <input type="text" class="form-control" name="firstname" value="{{ $child->firstname }}"/>
+                </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
-            <div class="form-group">
-                <strong>{{__('messages.child_last_name')}}:</strong>
-                <input type="text" class="form-control" name="lastname" value="{{ $child->lastname }}"/>
-            </div>
+                <div class="form-group">
+                    <strong>{{__('messages.child_last_name')}}:</strong>
+                    <input type="text" class="form-control" name="lastname" value="{{ $child->lastname }}"/>
+                </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
 
@@ -68,12 +68,13 @@
                     <strong>{{__('messages.child_parent')}}:</strong>
 
 
-                        <select name="parent" class="form-control">
+                    <select name="parent" class="form-control">
 
-                            @foreach($users as $user)
-                                <option value="{{$user->id}}" {{ $user->id == old('user_id', $child->user_id) ? 'selected' : '' }}>{{$user->name}}</option>
-                            @endforeach
-                        </select>
+                        @foreach($users as $user)
+                            <option
+                                value="{{$user->id}}" {{ $user->id == old('user_id', $child->user_id) ? 'selected' : '' }}>{{$user->name}}</option>
+                        @endforeach
+                    </select>
 
                     @error('parent')
 

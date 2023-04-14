@@ -13,7 +13,7 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $children = Child::with('user')->paginate(10);
+        $children = Child::with('user')->paginate(20);
         return view('children.index', compact('children'));
     }
 
@@ -47,7 +47,7 @@ class ChildController extends Controller
 
         $child->save();
 
-        return redirect()->route('children.index')->with('success', 'Child has been created successfully.');
+        return redirect()->route('children.index')->with('success', __('messages.child_successfully_created'));
     }
 
     /**
@@ -85,11 +85,11 @@ class ChildController extends Controller
         $child = Child::find($id);
         $child->firstname = $request->get('firstname');
         $child->lastname = $request->get('lastname');
-        $child->user_id = $request->get('user');
+        $child->user_id = $request->get('parent');
         $child->age = $request->get('age');
         $child->save();
 
-        return redirect()->route('children.index')->with('success', 'Child has been updated successfully.');
+        return redirect()->route('children.index')->with('success', __('messages.child_successfully_updated'));
     }
 
     /**
@@ -100,7 +100,7 @@ class ChildController extends Controller
         $child = Child::find($id);
         if ($child) {
             $child->delete();
-            return redirect()->route('children.index')->with('success', 'Child has been deleted successfully.');
+            return redirect()->route('children.index')->with('success', __('messages.child_successfully_deleted'));
         }
     }
 }

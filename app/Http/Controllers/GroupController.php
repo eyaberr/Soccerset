@@ -13,7 +13,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups= Group::paginate(10);
+        $groups = Group::with('children')->paginate(20);
         return view('groups.index', compact('groups'));
     }
 
@@ -33,20 +33,18 @@ class GroupController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'number_of_players' => 'required|string|max:255',
-            'children' => 'required|string|max:255|exists:children,id',
-
+            'number_of_players' => 'required|integer',
+            'children' => 'required|array|exists:children,id',
         ]);
 
-        $group = new Group([
-            'name' => $request->get('name'),
-            'number_of_players' => $request->get('number_of_players'),
-            'child_id' => $request->get('children'),
-        ]);
-
+        $group = new Group();
+        $group->name = $request->input('name');
+        $group->number_of_players = $request->input('number_of_players');
         $group->save();
 
-        return redirect()->route('groups.index')->with('success', 'Group has been created successfully.');
+        $group->children()->sync($request->input('children'));
+
+        return redirect()->route('groups.index')->with('success', __('messages.group_successfully_updated'));
     }
 
     /**
@@ -54,8 +52,9 @@ class GroupController extends Controller
      */
     public function show(string $id)
     {
-        $group = Group::with('children')->find($id);
-        return view('groups.show', compact('group'));
+        $group = Group::with('children')->findOrFail($id);
+        $children=Child::all();
+        return view('groups.show', compact('group','children'));
     }
 
     /**
@@ -63,11 +62,9 @@ class GroupController extends Controller
      * @param string $id
      */
     public function edit(string $id)
-
     {
-        $group = Group::find($id);
-        $children = Child::all();
-        return view('groups.edit', compact('group', 'children'));
+        $group = Group::with('children')->findOrFail($id);
+        return view('groups.edit', compact('group'));
     }
 
     /**
@@ -77,15 +74,15 @@ class GroupController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'number_of_players' => 'required|string|max:255',
-            'children' => 'required|string|max:255|exists:children,id',
+            'number_of_players' => 'required|integer',
+            'children' => 'required|array|exists:children,id',
         ]);
         $group = Group::find($id);
-        $group->name = $request->get('name');
-        $group->number_of_players = $request->get('number_of_players');
-        $group->child_id = $request->get('children');
+        $group->name = $request->input('name');
+        $group->number_of_players = $request->input('number_of_players');
+        $group->children = $request->get('children');
         $group->save();
-        return redirect()->route('groups.index')->with('success', 'Group has been updated successfully.');
+        return redirect()->route('groups.index')->with('success', __('messages.group_successfully_updated'));
     }
 
 
@@ -97,7 +94,7 @@ class GroupController extends Controller
         $group = Group::find($id);
         if ($group) {
             $group->delete();
-            return redirect()->route('groups.index')->with('success', 'Group has been deleted successfully.');
+            return redirect()->route('groups.index')->with('success', __('messages.group_successfully_deleted'));
         }
     }
 }

@@ -17,7 +17,7 @@ class Group extends Model
     protected $fillable = [
         'name',
         'number_of_players',
-        'child_id'
+        'children',
     ];
 
     use HasFactory;

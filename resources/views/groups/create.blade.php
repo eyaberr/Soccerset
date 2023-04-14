@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
 
-    <title>add group</title>
+    <title>{{__('messages.groups_space_title')}}</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -28,7 +28,7 @@
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('groups.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('groups.index') }}"> {{__('messages.back_button')}}</a>
 
             </div>
 
@@ -56,9 +56,9 @@
 
                 <div class="form-group">
 
-                    <strong>Name:</strong>
+                    <strong>Group Name:</strong>
 
-                    <input type="text" name="name" class="form-control" placeholder="Name">
+                    <input type="text" name="name" class="form-control" placeholder="Group Name">
 
                     @error('name')
 
@@ -75,9 +75,9 @@
 
                 <div class="form-group">
 
-                    <strong>NumberOfPlayers:</strong>
+                    <strong>Number Of Players:</strong>
 
-                    <input type="number" name="number_of_players" class="form-control" placeholder="NumberOfPlayers">
+                    <input type="number" name="number_of_players" class="form-control" placeholder="Number Of Players">
 
                     @error('number_of_players')
 
@@ -88,14 +88,29 @@
                 </div>
 
             </div>
-
             <div class="col-xs-6 col-sm-6 col-md-6">
 
-                <button type="submit" class="btn btn-primary ml-3">Submit</button>
+                <div class="form-group">
 
+                    <strong>Players list:</strong>
+                    <select name="children[]" multiple class="form-control">
+                        @foreach($children as $child)
+                            <option value="{{$child->id}}">{{$child->firstname}} {{$child->lastname}}</option>
+                        @endforeach
+                    </select>
+                        @error('children')
+
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+
+                        @enderror
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+
+                            <button type="submit" class="btn btn-primary ml-3">Submit</button>
+
+                        </div>
+                </div>
             </div>
         </div>
-
     </form>
 
 </div>
