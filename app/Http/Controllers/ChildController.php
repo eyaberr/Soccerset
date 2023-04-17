@@ -13,7 +13,7 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $children = Child::with('user')->paginate(20);
+        $children = Child::with('user')->paginate(30);
         return view('children.index', compact('children'));
     }
 

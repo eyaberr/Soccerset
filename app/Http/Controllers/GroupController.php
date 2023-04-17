@@ -40,6 +40,7 @@ class GroupController extends Controller
         $group = new Group();
         $group->name = $request->input('name');
         $group->number_of_players = $request->input('number_of_players');
+        $group->children=$request->input('children');
         $group->save();
 
         $group->children()->sync($request->input('children'));
@@ -53,8 +54,9 @@ class GroupController extends Controller
     public function show(string $id)
     {
         $group = Group::with('children')->findOrFail($id);
-        $children=Child::all();
-        return view('groups.show', compact('group','children'));
+        $childCount = $group->children()->count();
+        return view('groups.show', compact('group', 'childCount'));
+
     }
 
     /**
@@ -64,7 +66,8 @@ class GroupController extends Controller
     public function edit(string $id)
     {
         $group = Group::with('children')->findOrFail($id);
-        return view('groups.edit', compact('group'));
+        $children=Child::all();
+        return view('groups.edit', compact('group','children'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Group;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +15,14 @@ class InfoFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+
     public function definition(): array
     {
+        $group=Group::latest()->first() ;
         return [
             'content'=> fake()->paragraph(),
+            'group_id'=>$group->id,
         ];
     }
 }

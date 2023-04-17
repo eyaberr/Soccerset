@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
 
-    <title>Show Child</title>
+    <title>{{__('messages.show_info_title')}}</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -22,13 +22,13 @@
 
             <div class="pull-left">
 
-                <h2>Show Child</h2>
+                <h2>{{__('messages.show_info_title')}}</h2>
 
             </div>
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('children.index') }}"> {{__('messages.back_button')}}</a>
+                <a class="btn btn-primary" href="{{ route('infos.index') }}"> {{__('messages.back_button')}}</a>
 
             </div>
             </br>
@@ -53,27 +53,21 @@
 
             <th>{{__('messages.user_id')}}</th>
 
-            <th>{{__('messages.child_first_name')}}</th>
+            <th>{{__('messages.info_content')}}</th>
 
-            <th>{{__('messages.child_last_name')}}</th>
+            <th>{{__('messages.group_name')}}</th>
 
-            <th>{{__('messages.child_parent')}}</th>
-
-            <th>{{__('messages.child_age')}}</th>
 
         </tr>
 
         <tr>
 
-            <td>{{ $child->id }}</td>
+            <td>{{ $info->id }}</td>
 
-            <td> {{$child->firstname }}</td>
+            <td> {{$info->content }}</td>
 
-            <td>{{ $child->lastname }}</td>
+            <td>{{ $info->group->name }}</td>
 
-            <td>{{ $child->user->name }}</td>
-
-            <td>{{ $child->age }}</td>
         </tr>
 
     </table>

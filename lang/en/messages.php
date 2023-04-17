@@ -39,8 +39,23 @@ return [
     'group_successfully_created' => 'Group has been created successfully.',
     'child_successfully_deleted' => 'Child has been deleted successfully.',
     'group_successfully_deleted' => 'Group has been deleted successfully.',
+    'info_successfully_created'=>'Info has been created successfully.',
+    'info_successfully_deleted'=>'Info has been deleted successfully.',
+    'info_successfully_updated' => 'Info has been updated successfully.',
     'edit_group_title'=> 'Edit Group',
     'group_name'=>'Group Name',
     'group_players'=>'Number Of Players',
+    'show_group_title'=>'Show Group',
+    'number_of_players'=>'Number Of Players',
+     'infos_space_title'=>'INFOS SPACE',
+    'add_info_title'=>'Add Info',
+    'info_content'=> 'Info Content',
+    'info_group'=>'Group',
+    'write_info_title'=>'Write Info',
+    'content_write'=>'Write Here Info About The Group',
+    'edit_info_title'=>'Edit Info',
+    'show_info_title'=>'Show Info',
+
+
 
     ];

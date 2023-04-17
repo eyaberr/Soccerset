@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
 
-    <title>{{__('messages.edit_group_title')}}</title>
+    <title>{{__('messages.edit_info_title')}}</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -22,13 +22,13 @@
 
             <div class="pull-left mb-2">
 
-                <h2>{{__('messages.edit_group_title')}}</h2>
+                <h2>{{__('messages.edit_info_title')}}</h2>
 
             </div>
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('groups.index') }}">{{__('messages.back_button')}}</a>
+                <a class="btn btn-primary" href="{{ route('infos.index') }}">{{__('messages.back_button')}}</a>
 
             </div>
 
@@ -45,38 +45,33 @@
                 </ul>
             </div><br/>
         @endif
-
-        <form method="post" action="{{ route('groups.update', $group->id) }}">
+        <form method="post" action="{{ route('infos.update', $info->id) }}">
             <div class="col-xs-6 col-sm-6 col-md-6">
                 <div class="form-group">
                     @csrf
                     @method('PATCH')
-                    <strong>{{__('messages.group_name')}}:</strong>
+                    <strong>{{__('messages.info_content')}}:</strong>
 
-                    <input type="text" class="form-control" name="name" value="{{ $group->name }}"/>
+                    <input type="text" class="form-control" name="content" value="{{ $info->content }}"/>
                 </div>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-6">
-                <div class="form-group">
-                    <strong>{{__('messages.number_of_players')}}:</strong>
-                    <input type="text" class="form-control" name="number_of_players" value="{{ $group->number_of_players }}"/>
-                </div>
-            </div>
+
             <div class="col-xs-6 col-sm-6 col-md-6">
 
                 <div class="form-group">
 
-                    <strong>{{__('messages.children_list')}}:</strong>
+                    <strong>{{__('messages.info_group')}}:</strong>
 
 
-                    <select name="children[]" multiple class="form-control">
+                    <select name="group" class="form-control">
 
-                        @foreach($group->children as $child)
-                            <option value="{{$child->id}}" {{ $child->id == old('child', $child->id) ? 'selected' : '' }}>{{$child->firstname}} {{$child->lastname}}</option>
+                        @foreach($groups as $group)
+                            <option
+                                value="{{$group->id}}" {{ $group->id == old('group_id', $info->group_id) ? 'selected' : '' }}>{{$group->name}}</option>
                         @endforeach
                     </select>
 
-                    @error('children')
+                    @error('group')
 
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
 

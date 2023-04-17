@@ -47,32 +47,26 @@
 
     @endif
 
+
     <table class="table table-bordered">
-
         <tr>
-
             <th>{{__('messages.user_id')}}</th>
-
             <th>{{__('messages.group_name')}}</th>
-
             <th>{{__('messages.number_of_players')}}</th>
-
             <th>{{__('messages.players_list')}}</th>
-
         </tr>
-
         <tr>
-
             <td>{{ $group->id }}</td>
-
-            <td> {{$group->name }}</td>
-
+            <td>{{ $group->name }}</td>
             <td>{{ $group->number_of_players }}</td>
-
-            <td>{{ $child->firstname }} {{ $child->lastname }}</td>
-
+            <td>
+                <ul>
+                    @foreach ($group->children as $child)
+                        <li>{{ $child->firstname }} {{ $child->lastname }}</li>
+                    @endforeach
+                </ul>
+            </td>
         </tr>
-
     </table>
 </div>
 </body>
