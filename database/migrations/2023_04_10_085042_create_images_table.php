@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('path');
             $table->foreignId('event_id')->constrained();
-
             $table->timestamps();
         });
     }

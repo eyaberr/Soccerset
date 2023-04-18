@@ -1,11 +1,6 @@
 <?php
 
-use App\Http\Controllers\ChildController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\GroupController;
-use App\Http\Controllers\InfoController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,10 +17,29 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('users', UserController::class);
-Route::resource('permissions', PermissionController::class);
 
-Route::resource('children', ChildController::class);
-Route::resource('groups', GroupController::class);
-Route::resource('infos', InfoController::class);
-Route::resource('events', EventController::class);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    /**
+     * Login Routes
+     */
+    Route::get('/login', 'LoginController@show')->name('login.show');
+    Route::post('/login', 'LoginController@login')->name('login.perform');
+
+});
+
+Route::group(['middleware' => ['auth']], function() {
+    /**
+     * Logout Routes
+     */
+    Route::get('/logout', 'LogoutController@perform')->name('logout.perform');
+});
+
+require __DIR__.'/auth.php';
