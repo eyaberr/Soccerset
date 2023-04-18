@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
             ChildSeeder::class,
             GroupSeeder::class,
             InfoSeeder::class,
+            EventSeeder::class,
         ]);
     }
 }

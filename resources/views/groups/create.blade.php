@@ -22,7 +22,7 @@
 
             <div class="pull-left mb-2">
 
-                <h2>Create Group</h2>
+                <h2>{{__('messages.add_group_title')}}</h2>
 
             </div>
 

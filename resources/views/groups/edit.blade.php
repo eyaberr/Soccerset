@@ -70,9 +70,8 @@
 
 
                     <select name="children[]" multiple class="form-control">
-
-                        @foreach($group->children as $child)
-                            <option value="{{$child->id}}" {{ $child->id == old('child', $child->id) ? 'selected' : '' }}>{{$child->firstname}} {{$child->lastname}}</option>
+                        @foreach($children as $child)
+                            <option value="{{$child->id}}" @if(in_array($child->id, $selectedChildrenArray)) selected @endif >{{$child->firstname}} {{$child->lastname}}</option>
                         @endforeach
                     </select>
 

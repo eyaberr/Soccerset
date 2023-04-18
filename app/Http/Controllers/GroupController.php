@@ -40,7 +40,6 @@ class GroupController extends Controller
         $group = new Group();
         $group->name = $request->input('name');
         $group->number_of_players = $request->input('number_of_players');
-        $group->children=$request->input('children');
         $group->save();
 
         $group->children()->sync($request->input('children'));
@@ -65,9 +64,10 @@ class GroupController extends Controller
      */
     public function edit(string $id)
     {
-        $group = Group::with('children')->findOrFail($id);
-        $children=Child::all();
-        return view('groups.edit', compact('group','children'));
+        $group = Group::findOrFail($id);
+        $selectedChildrenArray = $group->children->pluck('id')->toArray();
+        $children = Child::all();
+        return view('groups.edit', compact('group','children', 'selectedChildrenArray'));
     }
 
     /**
@@ -80,11 +80,14 @@ class GroupController extends Controller
             'number_of_players' => 'required|integer',
             'children' => 'required|array|exists:children,id',
         ]);
-        $group = Group::find($id);
+
+        $group = Group::findOrFail($id);
         $group->name = $request->input('name');
         $group->number_of_players = $request->input('number_of_players');
-        $group->children = $request->get('children');
         $group->save();
+
+        $group->children()->sync($request->input('children'));
+
         return redirect()->route('groups.index')->with('success', __('messages.group_successfully_updated'));
     }
 

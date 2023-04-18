@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,10 +17,12 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
+        $user=User::latest()->first() ;
         return [
             'title'=>fake()->title(),
             'description'=>fake()->paragraph(),
             'type'=>fake()->name(),
+            'user_id'=>$user->id,
             'start_date'=>fake()->date(),
             'end_date'=>fake()->date(),
         ];

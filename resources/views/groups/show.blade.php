@@ -53,7 +53,7 @@
             <th>{{__('messages.user_id')}}</th>
             <th>{{__('messages.group_name')}}</th>
             <th>{{__('messages.number_of_players')}}</th>
-            <th>{{__('messages.players_list')}}</th>
+            <th>{{__('messages.children_list')}}</th>
         </tr>
         <tr>
             <td>{{ $group->id }}</td>
