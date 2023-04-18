@@ -44,7 +44,7 @@ return [
     'edit_group_title' => 'Edit Group',
     'group_name' => 'Group Name',
     'show_group_title' => 'Show Group',
-    'number_of_players' => 'Number Of Players',
+    'group_players_number' => 'Number Of Players',
     'infos_space_title' => 'INFOS SPACE',
     'add_info_title' => 'Add Info',
     'info_content' => 'Info Content',
@@ -61,6 +61,11 @@ return [
     'event_title' => 'Title',
     'event_description' => 'Description',
     'event_type' => 'Type',
-'create_event'=>'Create Event',
+    'create_event' => 'Create Event',
+    'event_start_date' => 'Start Date',
+    'event_end_date' => 'End Date',
+    'edit_event_title'=>'Edit Event',
+    'event_trainer'=>'Trainer',
+
 
 ];

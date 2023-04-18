@@ -55,7 +55,7 @@ class ChildController extends Controller
      */
     public function show(string $id)
     {
-        $child = Child::find($id);
+        $child = Child::findOrFail($id);
         return view('children.show', compact('child'));
     }
 
@@ -65,7 +65,7 @@ class ChildController extends Controller
     public function edit(string $id)
 
     {
-        $child = Child::find($id);
+        $child = Child::findOrFail($id);
         $users = User::ofRole(User::ROLES['parent'])->get();
         return view('children.edit', compact('child', 'users'));
     }
@@ -82,7 +82,7 @@ class ChildController extends Controller
             'age' => 'required|string|max:255',
         ]);
 
-        $child = Child::find($id);
+        $child = Child::findOrFail($id);
         $child->firstname = $request->get('firstname');
         $child->lastname = $request->get('lastname');
         $child->user_id = $request->get('parent');
@@ -97,7 +97,7 @@ class ChildController extends Controller
      */
     public function destroy(string $id)
     {
-        $child = Child::find($id);
+        $child = Child::findOrFail($id);
         if ($child) {
             $child->delete();
             return redirect()->route('children.index')->with('success', __('messages.child_successfully_deleted'));

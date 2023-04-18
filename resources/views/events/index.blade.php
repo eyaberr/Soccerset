@@ -43,7 +43,6 @@
 
         <tr>
 
-
             <th>{{__('messages.user_id')}}</th>
 
             <th>{{__('messages.event_title')}}</th>
@@ -52,6 +51,11 @@
 
             <th>{{__('messages.event_type')}}</th>
 
+            <th>{{__('messages.event_trainer')}}</th>
+
+            <th>{{__('messages.event_start_date')}}</th>
+
+            <th>{{__('messages.event_end_date')}}</th>
 
         </tr>
 
@@ -67,16 +71,24 @@
                 <td>{{ $event->description }}</td>
 
                 <td>{{$event->type}}</td>
+
+                <td>{{ $event->user->name }}</td>
+
+
+                <td>{{$event->start_date}}</td>
+
+                <td>{{$event->end_date}}</td>
                 <td>
 
 
-                    <form action="{{ route('groups.destroy',$event->id) }}" method="Post">
+
+                    <form action="{{ route('events.destroy',$event->id) }}" method="Post">
 
                         <a class="btn btn-primary"
-                           href="{{ route('groups.show',$event->id) }}">{{__('messages.show_button')}}</a>
+                           href="{{ route('events.show',$event->id) }}">{{__('messages.show_button')}}</a>
 
                         <a class="btn btn-primary"
-                           href="{{ route('groups.edit',$event->id) }}">{{__('messages.edit_button')}}</a>
+                           href="{{ route('events.edit',$event->id) }}">{{__('messages.edit_button')}}</a>
 
                         @csrf
 

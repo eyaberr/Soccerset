@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -12,7 +13,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::paginate(20);
+        $events = Event::with('user')->paginate(20);
         return view('events.index', compact('events'));
     }
 
@@ -22,7 +23,8 @@ class EventController extends Controller
     public function create()
     {
         {
-            return view('groups.create');
+            $users = User::ofRole(User::ROLES['trainer'])->get();
+            return view('events.create', compact('users'));
         }
     }
 
@@ -35,13 +37,15 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'type' => 'required|string|max:255',
-            'start_date'=>'required|string|max:255',
-            'end_date'=>'required|string|max:255',
+            'trainer' => 'required|string|max:255|exists:users,id',
+            'start_date' => 'required|string|max:255',
+            'end_date' => 'required|string|max:255',
         ]);
-        $event=new Event();
+        $event = new Event();
         $event->title = $request->input('title');
         $event->description = $request->input('description');
         $event->type = $request->input('type');
+        $event->user_id = $request->input('trainer');
         $event->start_date = $request->input('start_date');
         $event->end_date = $request->input('end_date');
         $event->save();
@@ -53,8 +57,8 @@ class EventController extends Controller
      */
     public function show(string $id)
     {
-        $event=Event::findOrFail($id);
-        return view('groups.show', compact('event'));
+        $event = Event::findOrFail($id);
+        return view('events.show', compact('event'));
     }
 
     /**
@@ -62,8 +66,9 @@ class EventController extends Controller
      */
     public function edit(string $id)
     {
-        $event=Event::findOrFail($id);
-        return view('groups.edit', compact('event'));
+        $event = Event::findOrFail($id);
+        $users = User::ofRole(User::ROLES['trainer'])->get();
+        return view('events.edit', compact('event','users'));
     }
 
     /**
@@ -76,13 +81,15 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'type' => 'required|string|max:255',
-            'start_date'=>'required|string|max:255',
-            'end_date'=>'required|string|max:255',
+            'trainer' => 'required|string|max:255|exists:users,id',
+            'start_date' => 'required|string|max:255',
+            'end_date' => 'required|string|max:255',
         ]);
-        $event=Event::findOrFail($id);
+        $event = Event::findOrFail($id);
         $event->title = $request->input('title');
         $event->description = $request->input('description');
         $event->type = $request->input('type');
+        $event->user_id = $request->input('trainer');
         $event->start_date = $request->input('start_date');
         $event->end_date = $request->input('end_date');
         $event->save();
@@ -94,7 +101,7 @@ class EventController extends Controller
      */
     public function destroy(string $id)
     {
-        $event = Event::find($id);
+        $event = Event::findOrFail($id);
         if ($event) {
             $event->delete();
             return redirect()->route('events.index')->with('success', __('messages.event_successfully_deleted'));

@@ -68,6 +68,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Child::class);
     }
+    /**
+     * Get the events for the user.
+     */
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
+    }
 
     /**
      * Scope a query to only include users of a given role_id.

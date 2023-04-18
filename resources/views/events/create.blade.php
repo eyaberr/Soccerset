@@ -28,7 +28,7 @@
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('groups.index') }}"> {{__('messages.back_button')}}</a>
+                <a class="btn btn-primary" href="{{ route('events.index') }}"> {{__('messages.back_button')}}</a>
 
             </div>
 
@@ -45,8 +45,17 @@
         </div>
 
     @endif
+    @if(session('errors'))
 
-    <form action="{{ route('groups.store') }}" method="POST" enctype="multipart/form-data">
+        <div class="alert alert-success mb-1 mt-1">
+
+            {{ session('errors') }}
+
+        </div>
+
+    @endif
+
+    <form action="{{ route('events.store') }}" method="POST" enctype="multipart/form-data">
 
         @csrf
 
@@ -56,11 +65,11 @@
 
                 <div class="form-group">
 
-                    <strong>Group Name:</strong>
+                    <strong>Event Title:</strong>
 
-                    <input type="text" name="name" class="form-control" placeholder="Group Name">
+                    <input type="text" name="title" class="form-control" placeholder="Event Title">
 
-                    @error('name')
+                    @error('title')
 
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
 
@@ -75,11 +84,11 @@
 
                 <div class="form-group">
 
-                    <strong>Number Of Players:</strong>
+                    <strong>Description:</strong>
 
-                    <input type="number" name="number_of_players" class="form-control" placeholder="Number Of Players">
+                    <input type="text" name="description" class="form-control" placeholder="Description">
 
-                    @error('number_of_players')
+                    @error('description')
 
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
 
@@ -92,29 +101,78 @@
 
                 <div class="form-group">
 
-                    <strong>Players list:</strong>
-                    <select name="children[]" multiple class="form-control">
-                        @foreach($children as $child)
-                            <option value="{{$child->id}}">{{$child->firstname}} {{$child->lastname}}</option>
+                    <strong>Type:</strong>
+                    <input type="text" name="type" class="form-control" placeholder="Type">
+
+                    @error('type')
+
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+
+                    @enderror
+                </div>
+
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+
+                <div class="form-group">
+
+                    <strong>{{__('messages.event_trainer')}}:</strong>
+
+                    <select name="trainer" class="form-control">
+                        @foreach($users as $user)
+                            <option value="{{$user->id}}">{{$user->name}}</option>
                         @endforeach
                     </select>
-                    @error('children')
+
+                    @error('user')
 
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
 
                     @enderror
-                    <div class="col-xs-6 col-sm-6 col-md-6">
 
-                        <button type="submit" class="btn btn-primary ml-3">Submit</button>
-
-                    </div>
                 </div>
+
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+
+                <div class="form-group">
+
+                    <strong>Start Date:</strong>
+                    <input type="date" name="start_date" class="form-control" placeholder="Start Date">
+
+                    @error('start_date')
+
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+
+                    @enderror
+                </div>
+
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+
+                <div class="form-group">
+
+                    <strong>End Date:</strong>
+                    <input type="date" name="end_date" class="form-control" placeholder="End Date">
+
+                    @error('type')
+
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+
+                    @enderror
+                </div>
+
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+
+                <button type="submit" class="btn btn-primary ml-3">Submit</button>
+
             </div>
         </div>
+
+
     </form>
-
 </div>
-
 </body>
 
 </html>
