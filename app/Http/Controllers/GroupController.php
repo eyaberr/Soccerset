@@ -44,7 +44,7 @@ class GroupController extends Controller
 
         $group->children()->sync($request->input('children'));
 
-        return redirect()->route('groups.index')->with('success', __('messages.group_successfully_updated'));
+        return redirect()->route('groups.index')->with('success', __('messages.group_successfully_created'));
     }
 
     /**

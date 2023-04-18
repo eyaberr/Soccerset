@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->string('path');
+            $table->foreignId('event_id')->constrained();
             $table->timestamps();
         });
     }

@@ -64,8 +64,14 @@ return [
     'create_event' => 'Create Event',
     'event_start_date' => 'Start Date',
     'event_end_date' => 'End Date',
-    'edit_event_title'=>'Edit Event',
-    'event_trainer'=>'Trainer',
-
-
+    'edit_event_title' => 'Edit Event',
+    'event_trainer' => 'Trainer',
+    'permission_successfully_updated' => 'Permission has been updated successfully.',
+    'permission_successfully_created' => 'Permission has been created successfully.',
+    'permission_successfully_deleted' => 'Permission has been deleted successfully.',
+    'permissions_space_title' => 'PERMISSIONS SPACE',
+    'add_permission_title' => 'Add Permission',
+    'write_permission_title' => 'Add Permission',
+    'show_permission_title' => 'Show Permission',
+    'edit_permission_title' => 'Edit Permission'
 ];

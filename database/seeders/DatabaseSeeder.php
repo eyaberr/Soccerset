@@ -17,11 +17,7 @@ class DatabaseSeeder extends Seeder
          */
 //        $this->call([
 //            RoleSeeder::class,
-//            PermissionSeeder::class,
-//            ChildSeeder::class,
-//            GroupSeeder::class,
-//            InfoSeeder::class,
-//            EventSeeder::class,
+//
 //            ImageSeeder::class,
 //            VideoSeeder::class
 //        ]);
@@ -44,6 +40,7 @@ class DatabaseSeeder extends Seeder
             GroupSeeder::class,
             InfoSeeder::class,
             EventSeeder::class,
+            PermissionSeeder::class,
         ]);
     }
 }
