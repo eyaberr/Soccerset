@@ -38,7 +38,14 @@
         </div>
 
     @endif
+    @if(session('errors'))
 
+        <div class="alert alert-success mb-1 mt-1">
+
+            {{ session('errors') }}
+
+        </div>
+    @endif
     <table class="table table-bordered">
 
         <tr>
@@ -70,7 +77,7 @@
 
                 <td>{{ $event->description }}</td>
 
-                <td>{{$event->type}}</td>
+                <td>{{$event->key}}</td>
 
                 <td>{{ $event->user->name }}</td>
 
@@ -79,10 +86,7 @@
 
                 <td>{{$event->end_date}}</td>
                 <td>
-
-
-
-                    <form action="{{ route('events.destroy',$event->id) }}" method="Post">
+                   <form action="{{ route('events.destroy',$event->id) }}" method="Post">
 
                         <a class="btn btn-primary"
                            href="{{ route('events.show',$event->id) }}">{{__('messages.show_button')}}</a>

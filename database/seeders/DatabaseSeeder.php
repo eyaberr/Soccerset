@@ -35,12 +35,37 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'role_id' => \App\Models\User::ROLES["admin"]
         ]);
-        $this->call([
-            ChildSeeder::class,
-            GroupSeeder::class,
-            InfoSeeder::class,
-            EventSeeder::class,
-            PermissionSeeder::class,
+
+        \App\Models\User::factory()->create([
+            'name' => 'Test Trainer 1',
+            'email' => 'trainer1@trainer.com',
+            'role_id' => \App\Models\User::ROLES["trainer"]
         ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Test Trainer 2',
+            'email' => 'trainer2@trainer.com',
+            'role_id' => \App\Models\User::ROLES["trainer"]
+        ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Test Parent 1',
+            'email' => 'parent1@trainer.com',
+            'role_id' => \App\Models\User::ROLES["parent"]
+        ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Test Parent 2',
+            'email' => 'parent2@trainer.com',
+            'role_id' => \App\Models\User::ROLES["parent"]
+        ]);
+
+//        $this->call([
+//            ChildSeeder::class,
+//            GroupSeeder::class,
+//            InfoSeeder::class,
+//            EventSeeder::class,
+//            PermissionSeeder::class,
+//        ]);
     }
 }

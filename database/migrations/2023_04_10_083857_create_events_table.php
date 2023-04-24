@@ -14,10 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('description')->nullable();
-            $table->string('type');
+            $table->tinyInteger('type');
             $table->foreignId('user_id')->constrained();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->timestamps();
         });
     }

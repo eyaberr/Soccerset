@@ -67,8 +67,11 @@
                     <strong>{{__('messages.event_type')}}:</strong>
 
 
-                    <input type="text" class="form-control" name="type" value="{{ $event->type }}"/>
-
+                    <select name="type" class="form-control">
+                        @foreach($types as $key => $value)
+                            <option value="{{$value}}" {{$value == old('value', $value) ? 'selected' : ''}}>{{ __("messages.$key") }}</option>
+                        @endforeach
+                    </select>
 
                     @error('type')
 
@@ -110,7 +113,7 @@
                     <strong>{{__('messages.event_start_date')}}:</strong>
 
 
-                    <input type="date" class="form-control" name="start_date" value="{{ $event->start_date }}"/>
+                    <input type="datetime-local" class="form-control" name="start_date" value="{{ $event->start_date }}"/>
 
 
                     @error('start_date')
@@ -129,7 +132,7 @@
                     <strong>{{__('messages.event_end_date')}}:</strong>
 
 
-                    <input type="date" class="form-control" name="end_date" value="{{ $event->end_date }}"/>
+                    <input type="datetime-local" class="form-control" name="end_date" value="{{ $event->end_date }}"/>
 
 
                     @error('end_date')

@@ -102,7 +102,11 @@
                 <div class="form-group">
 
                     <strong>Type:</strong>
-                    <input type="text" name="type" class="form-control" placeholder="Type">
+                    <select name="type" class="form-control">
+                        @foreach($types as $key => $value)
+                            <option value="{{$value}}">{{ __("messages.$key") }}</option>
+                        @endforeach
+                    </select>
 
                     @error('type')
 
@@ -138,7 +142,7 @@
                 <div class="form-group">
 
                     <strong>Start Date:</strong>
-                    <input type="date" name="start_date" class="form-control" placeholder="Start Date">
+                    <input type="datetime-local" name="start_date" class="form-control" placeholder="Start Date">
 
                     @error('start_date')
 
@@ -153,9 +157,9 @@
                 <div class="form-group">
 
                     <strong>End Date:</strong>
-                    <input type="date" name="end_date" class="form-control" placeholder="End Date">
+                    <input type="datetime-local" name="end_date" class="form-control" placeholder="End Date">
 
-                    @error('type')
+                    @error('end_date')
 
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
 

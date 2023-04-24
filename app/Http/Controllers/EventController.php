@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class EventController extends Controller
 {
@@ -14,6 +15,7 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::with('user')->paginate(20);
+
         return view('events.index', compact('events'));
     }
 
@@ -22,10 +24,9 @@ class EventController extends Controller
      */
     public function create()
     {
-        {
-            $users = User::ofRole(User::ROLES['trainer'])->get();
-            return view('events.create', compact('users'));
-        }
+        $users = User::ofRole(User::ROLES['trainer'])->get();
+        $types = Event::TYPES;
+        return view('events.create', compact('users', 'types'));
     }
 
     /**
@@ -36,10 +37,10 @@ class EventController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
+            'type' => 'required|integer|' . Rule::in(Event::TYPES),
             'trainer' => 'required|string|max:255|exists:users,id',
-            'start_date' => 'required|string|max:255',
-            'end_date' => 'required|string|max:255',
+            'start_date' => 'required|date|before:end_date',
+            'end_date' => 'required|date',
         ]);
         $event = new Event();
         $event->title = $request->input('title');
@@ -68,7 +69,8 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $users = User::ofRole(User::ROLES['trainer'])->get();
-        return view('events.edit', compact('event','users'));
+        $types = Event::TYPES;
+        return view('events.edit', compact('event','users','types'));
     }
 
     /**
@@ -80,10 +82,10 @@ class EventController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
+            'type' => 'required|integer|' . Rule::in(Event::TYPES),
             'trainer' => 'required|string|max:255|exists:users,id',
-            'start_date' => 'required|string|max:255',
-            'end_date' => 'required|string|max:255',
+            'start_date' => 'required|before:end_date|date',
+            'end_date' => 'required|date',
         ]);
         $event = Event::findOrFail($id);
         $event->title = $request->input('title');

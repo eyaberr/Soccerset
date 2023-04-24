@@ -74,5 +74,7 @@ return [
     'write_permission_title' => 'Add Permission',
     'show_permission_title' => 'Show Permission',
     'edit_permission_title' => 'Edit Permission',
-    'show_event_title'=>'Show Event',
+    'training' => 'Training',
+    'medical_checkup' => 'Medical Check-up',
+    'friendly_game' => 'Friendly Game',
 ];

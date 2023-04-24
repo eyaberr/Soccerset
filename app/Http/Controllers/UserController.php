@@ -36,7 +36,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
             'role_id' => 'required|exists:roles,id',
-            'password' => 'required|string|min:8|max:255',
+            'password' => 'required|confirmed|string|min:8|max:255',
         ]);
         $user = new User([
             'name' => $request->get('name'),
@@ -77,14 +77,17 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id . '|max:255',
             'role_id' => 'required|exists:roles,id',
-            'password' => 'required|string|min:8|max:255',
+            'password' => 'nullable|confirmed|min:8|max:255',
         ]);
 
+        $password = $request->get('password');
         $user = User::find($id);
         $user->name = $request->get('name');
         $user->email = $request->get('email');
         $user->role_id = $request->get('role_id');
-        $user->password = $request->get('password');
+        if (isset($password)) {
+            $user->password = $password;
+        }
         $user->save();
 
         return redirect()->route('users.index')->with('success', 'User has been updated successfully.');

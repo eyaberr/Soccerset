@@ -133,10 +133,10 @@
 
                     <strong>{{__('messages.user_confirm_password')}}:</strong>
 
-                    <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password"
-                           id="confirm_password" required>
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password"
+                           id="password_confirmation" required>
 
-                    @error('confirm_password')
+                    @error('password_confirmation')
 
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
 

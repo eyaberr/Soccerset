@@ -11,6 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Event extends Model
 {
     use HasFactory;
+
+    const TYPES = [
+        'training' => 1,
+        'medical_checkup' => 2,
+        'friendly_game' => 3,
+    ];
     /**
      * The children that belong to the event.
      */
