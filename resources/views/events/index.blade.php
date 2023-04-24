@@ -77,7 +77,9 @@
 
                 <td>{{ $event->description }}</td>
 
-                <td>{{$event->key}}</td>
+
+                <td>{{ __("messages." .$types[$event->type]) }}</td>
+
 
                 <td>{{ $event->user->name }}</td>
 
@@ -86,7 +88,7 @@
 
                 <td>{{$event->end_date}}</td>
                 <td>
-                   <form action="{{ route('events.destroy',$event->id) }}" method="Post">
+                    <form action="{{ route('events.destroy',$event->id) }}" method="Post">
 
                         <a class="btn btn-primary"
                            href="{{ route('events.show',$event->id) }}">{{__('messages.show_button')}}</a>

@@ -69,7 +69,8 @@
 
                     <select name="type" class="form-control">
                         @foreach($types as $key => $value)
-                            <option value="{{$value}}" {{$value == old('value', $value) ? 'selected' : ''}}>{{ __("messages.$key") }}</option>
+                            <option
+                                value="{{$value}}" {{$value == old('value', $value) ? 'selected' : ''}}>{{ __("messages.$key") }}</option>
                         @endforeach
                     </select>
 
@@ -113,7 +114,8 @@
                     <strong>{{__('messages.event_start_date')}}:</strong>
 
 
-                    <input type="datetime-local" class="form-control" name="start_date" value="{{ $event->start_date }}"/>
+                    <input type="datetime-local" class="form-control" name="start_date"
+                           value="{{ $event->start_date }}"/>
 
 
                     @error('start_date')
@@ -143,6 +145,22 @@
 
                 </div>
 
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
+
+                    <strong>Players list:</strong>
+                    <select name="children[]" multiple class="form-control">
+                        @foreach($children as $child)
+                            <option @if(in_array($child->id, $selectedChildrenIds)) selected @endif value="{{$child->id}}">{{$child->firstname}} {{$child->lastname}}</option>
+                        @endforeach
+                    </select>
+                    @error('children')
+
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+
+                    @enderror
+                </div>
             </div>
             <button type="submit" class="btn btn-primary ml-3">{{__('messages.update_button')}}</button>
         </form>

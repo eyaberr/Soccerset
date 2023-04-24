@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('child_id')->constrained();
             $table->foreignId('event_id')->constrained();
             $table->tinyInteger('attendance')->nullable();
-            $table->json('stats');
+            $table->json('stats')->nullable();
             $table->timestamps();
         });
     }

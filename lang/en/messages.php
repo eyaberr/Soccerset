@@ -77,4 +77,5 @@ return [
     'training' => 'Training',
     'medical_checkup' => 'Medical Check-up',
     'friendly_game' => 'Friendly Game',
+    'show_event_title' => 'Show Event',
 ];

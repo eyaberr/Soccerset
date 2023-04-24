@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Child;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,9 +15,10 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::with('user')->paginate(20);
+        $events = Event::paginate(20);
+        $types = array_flip(Event::TYPES);
 
-        return view('events.index', compact('events'));
+        return view('events.index', compact('events', 'types'));
     }
 
     /**
@@ -26,7 +28,8 @@ class EventController extends Controller
     {
         $users = User::ofRole(User::ROLES['trainer'])->get();
         $types = Event::TYPES;
-        return view('events.create', compact('users', 'types'));
+        $children = Child::all();
+        return view('events.create', compact('users', 'types', 'children'));
     }
 
     /**
@@ -41,7 +44,10 @@ class EventController extends Controller
             'trainer' => 'required|string|max:255|exists:users,id',
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date',
+            'children' => 'array|exists:children,id'
         ]);
+        $children = $request->input('children');
+
         $event = new Event();
         $event->title = $request->input('title');
         $event->description = $request->input('description');
@@ -50,6 +56,12 @@ class EventController extends Controller
         $event->start_date = $request->input('start_date');
         $event->end_date = $request->input('end_date');
         $event->save();
+
+        if ($children) {
+            $event->children()->sync($children);
+        }
+
+
         return redirect()->route('events.index')->with('success', __('messages.event_successfully_updated'));
     }
 
@@ -59,7 +71,8 @@ class EventController extends Controller
     public function show(string $id)
     {
         $event = Event::findOrFail($id);
-        return view('events.show', compact('event'));
+        $types = array_flip(Event::TYPES);
+        return view('events.show', compact('event', 'types'));
     }
 
     /**
@@ -68,9 +81,11 @@ class EventController extends Controller
     public function edit(string $id)
     {
         $event = Event::findOrFail($id);
+        $selectedChildrenIds = $event->children->pluck('id')->toArray();
         $users = User::ofRole(User::ROLES['trainer'])->get();
         $types = Event::TYPES;
-        return view('events.edit', compact('event','users','types'));
+        $children = Child::all();
+        return view('events.edit', compact('event', 'users', 'types', 'children', 'selectedChildrenIds'));
     }
 
     /**
@@ -86,7 +101,9 @@ class EventController extends Controller
             'trainer' => 'required|string|max:255|exists:users,id',
             'start_date' => 'required|before:end_date|date',
             'end_date' => 'required|date',
+            'children' => 'array|exists:children,id'
         ]);
+        $children = $request->input('children');
         $event = Event::findOrFail($id);
         $event->title = $request->input('title');
         $event->description = $request->input('description');
@@ -95,6 +112,11 @@ class EventController extends Controller
         $event->start_date = $request->input('start_date');
         $event->end_date = $request->input('end_date');
         $event->save();
+
+        if ($children) {
+            $event->children()->sync($children);
+        }
+
         return redirect()->route('events.index')->with('success', __('messages.event_successfully_updated'));
     }
 

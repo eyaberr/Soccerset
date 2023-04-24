@@ -70,7 +70,7 @@
 
             <td>{{ $event->description }}</td>
 
-            <td>{{$event->type}}</td>
+            <td>{{__("messages." .$types[$event->type])}}</td>
 
             <td>{{ $event->user->name }}</td>
 

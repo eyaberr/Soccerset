@@ -45,15 +45,7 @@
         </div>
 
     @endif
-    @if(session('errors'))
 
-        <div class="alert alert-success mb-1 mt-1">
-
-            {{ session('errors') }}
-
-        </div>
-
-    @endif
 
     <form action="{{ route('events.store') }}" method="POST" enctype="multipart/form-data">
 
@@ -128,7 +120,7 @@
                         @endforeach
                     </select>
 
-                    @error('user')
+                    @error('trainer')
 
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
 
@@ -168,14 +160,32 @@
 
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
 
-                <button type="submit" class="btn btn-primary ml-3">Submit</button>
+                    <strong>Players list:</strong>
+                    <select name="children[]" multiple class="form-control">
+                        @foreach($children as $child)
+                            <option value="{{$child->id}}">{{$child->firstname}} {{$child->lastname}}</option>
+                        @endforeach
+                    </select>
+                    @error('children')
 
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+
+                    @enderror
+                </div>
             </div>
+
         </div>
+        <br>
+        <div class="col-xs-6 col-sm-6 col-md-6">
 
+            <button type="submit" class="btn btn-primary ml-3">Submit</button>
 
+        </div>
     </form>
+
+
 </div>
 </body>
 
