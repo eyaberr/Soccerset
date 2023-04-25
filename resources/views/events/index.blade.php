@@ -64,6 +64,10 @@
 
             <th>{{__('messages.event_end_date')}}</th>
 
+            <th>{{__('messages.children_of_events')}}</th>
+
+            <th></th>
+
         </tr>
 
         @foreach ($events as $event)
@@ -87,6 +91,7 @@
                 <td>{{$event->start_date}}</td>
 
                 <td>{{$event->end_date}}</td>
+                <td>{{$event->subscriptions_count}}</td>
                 <td>
                     <form action="{{ route('events.destroy',$event->id) }}" method="Post">
 

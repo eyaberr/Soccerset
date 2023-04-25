@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Child;
 use App\Models\Event;
+use App\Models\EventSubscription;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -15,9 +16,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::paginate(20);
+        $events = Event::withCount('subscriptions')->paginate(20);
         $types = array_flip(Event::TYPES);
-
         return view('events.index', compact('events', 'types'));
     }
 
@@ -46,6 +46,7 @@ class EventController extends Controller
             'end_date' => 'required|date',
             'children' => 'array|exists:children,id'
         ]);
+
         $children = $request->input('children');
 
         $event = new Event();
@@ -58,7 +59,19 @@ class EventController extends Controller
         $event->save();
 
         if ($children) {
-            $event->children()->sync($children);
+            $dataToInsert = [];
+            foreach ($children as $childrenId) {
+                //$eventSubscription = new EventSubscription();
+                //$eventSubscription->child_id = $childrenId;
+                //$eventSubscription->event_id = $event->id;
+                //$eventSubscription->save();
+                //optimisation
+                $dataToInsert[] = ['child_id' => $childrenId, 'event_id' => $event->id];
+            }
+
+            if (count($dataToInsert) > 0) {
+                EventSubscription::insert($dataToInsert);
+            }
         }
 
 
@@ -81,7 +94,7 @@ class EventController extends Controller
     public function edit(string $id)
     {
         $event = Event::findOrFail($id);
-        $selectedChildrenIds = $event->children->pluck('id')->toArray();
+        $selectedChildrenIds = $event->subscriptions->pluck('child_id')->toArray();
         $users = User::ofRole(User::ROLES['trainer'])->get();
         $types = Event::TYPES;
         $children = Child::all();
@@ -103,8 +116,9 @@ class EventController extends Controller
             'end_date' => 'required|date',
             'children' => 'array|exists:children,id'
         ]);
-        $children = $request->input('children');
-        $event = Event::findOrFail($id);
+        $children = $request->input('children', []);
+
+        $event = Event::with('subscriptions')->findOrFail($id);
         $event->title = $request->input('title');
         $event->description = $request->input('description');
         $event->type = $request->input('type');
@@ -113,17 +127,40 @@ class EventController extends Controller
         $event->end_date = $request->input('end_date');
         $event->save();
 
-        if ($children) {
-            $event->children()->sync($children);
+        $childrenIdsSubscribedToEvents = $event->subscriptions->pluck('child_id')->toArray();
+
+        $newSubscribedChildrenIds = array_diff($children, $childrenIdsSubscribedToEvents);
+        $removedSubscribedChildrenIds = array_diff($childrenIdsSubscribedToEvents, $children);
+
+        $dataToInsert = [];
+        foreach ($newSubscribedChildrenIds as $childrenId) {
+            //$eventSubscription = new EventSubscription();
+            //$eventSubscription->child_id = $childrenId;
+            //$eventSubscription->event_id = $event->id;
+            //$eventSubscription->save();
+            //optimisation
+            $dataToInsert[] = ['child_id' => $childrenId, 'event_id' => $event->id];
+        }
+
+        if (count($dataToInsert) > 0) {
+            EventSubscription::insert($dataToInsert);
+        }
+
+        if (count($removedSubscribedChildrenIds) > 0) {
+            EventSubscription::where('event_id', $event->id)
+                ->whereIn('child_id', $removedSubscribedChildrenIds)
+                ->delete();
         }
 
         return redirect()->route('events.index')->with('success', __('messages.event_successfully_updated'));
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public
+    function destroy(string $id)
     {
         $event = Event::findOrFail($id);
         if ($event) {

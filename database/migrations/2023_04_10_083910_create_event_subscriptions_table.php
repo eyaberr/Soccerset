@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('child_event', function (Blueprint $table) {
+        Schema::create('event_subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('child_id')->constrained();
-            $table->foreignId('event_id')->constrained();
+            $table->foreignId('child_id')->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+            $table->foreignId('event_id')->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
             $table->tinyInteger('attendance')->nullable();
             $table->json('stats')->nullable();
             $table->timestamps();

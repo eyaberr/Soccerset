@@ -50,16 +50,32 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\User::factory()->create([
             'name' => 'Test Parent 1',
-            'email' => 'parent1@trainer.com',
+            'email' => 'parent1@parent.com',
             'role_id' => \App\Models\User::ROLES["parent"]
         ]);
-
         \App\Models\User::factory()->create([
             'name' => 'Test Parent 2',
-            'email' => 'parent2@trainer.com',
+            'email' => 'parent2@parent.com',
             'role_id' => \App\Models\User::ROLES["parent"]
         ]);
-
+        \App\Models\Child::factory()->create([
+            'firstname' => 'Test ',
+            'lastname' => 'Child 1',
+            'user_id' => '4',
+            'age' => '10',
+        ]);
+        \App\Models\Child::factory()->create([
+            'firstname' => 'Test ',
+            'lastname' => 'Child 2',
+            'user_id' => '5',
+            'age' => '12',
+        ]);
+        \App\Models\Child::factory()->create([
+            'firstname' => 'Test ',
+            'lastname' => 'Child 3',
+            'user_id' => '4',
+            'age' => '11',
+        ]);
 //        $this->call([
 //            ChildSeeder::class,
 //            GroupSeeder::class,

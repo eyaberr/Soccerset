@@ -78,4 +78,5 @@ return [
     'medical_checkup' => 'Medical Check-up',
     'friendly_game' => 'Friendly Game',
     'show_event_title' => 'Show Event',
+    'children_of_events'=>'Training Subscription'
 ];

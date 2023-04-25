@@ -17,13 +17,23 @@ class Event extends Model
         'medical_checkup' => 2,
         'friendly_game' => 3,
     ];
+
     /**
      * The children that belong to the event.
      */
-    public function children(): BelongsToMany
+    /*public function children(): BelongsToMany
     {
         return $this->belongsToMany(Child::class);
+    }*/
+
+    /**
+     * Get the subscriptions for the event.
+     */
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(EventSubscription::class);
     }
+
     /**
      * Get the user that owns the event.
      */
@@ -31,6 +41,7 @@ class Event extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     /**
      * Get the images for the event.
      */
@@ -38,6 +49,7 @@ class Event extends Model
     {
         return $this->hasMany(Image::class);
     }
+
     /**
      * Get the videos for the event.
      */

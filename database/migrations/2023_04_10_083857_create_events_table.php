@@ -15,7 +15,9 @@ return new class extends Migration {
             $table->string('title');
             $table->string('description')->nullable();
             $table->tinyInteger('type');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();;
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->timestamps();
