@@ -38,13 +38,9 @@
     </div>
 
     @if ($message = Session::get('success'))
-
         <div class="alert alert-success">
-
             <p>{{ $message }}</p>
-
         </div>
-
     @endif
 
 
@@ -57,6 +53,7 @@
             <th>{{__('messages.event_description')}}</th>
 
             <th>{{__('messages.event_type')}}</th>
+
             <th>{{__('messages.event_trainer')}}</th>
 
             <th>{{__('messages.event_start_date')}}</th>
@@ -79,6 +76,48 @@
             <td>{{$event->end_date}}</td>
         </tr>
     </table>
+<h4>Players Details</h4><br>
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+
+            <th>FirstName</th>
+
+            <th>LastName</th>
+
+            <th>Attendance</th>
+
+            <th>Stats</th>
+
+        </tr>
+        @foreach ($subscribedChildren as $child)
+            <tr>
+                <td>{{$child->id}}</td>
+                <td>{{ $child->firstname }}</td>
+                <td>{{ $child->lastname }}</td>
+                <td>
+                    <form action="{{ route('events.show', $child->id) }}" method="POST">
+                        @method('PUT')
+                        @csrf
+                        <a class="btn btn-outline-primary" href="{{ route('events.show',$child->id) }}">Present</a>
+                        <a class="btn btn-outline-danger" href="{{ route('events.show',$child->id) }}">Absent</a>
+                    </form> <br>
+{{--                    @if ($child->status == 'present')--}}
+{{--                        <p>This player is present</p>--}}
+{{--                    @elseif($child->status == 'absent')--}}
+{{--                        <p>This player is absent</p>--}}
+{{--                    @endif--}}
+                </td>
+                <td><form action="{{ route('events.update', $child->id) }}" method="POST">
+                    @method('PUT')
+                    @csrf
+                        <button type="submit" name="stats" value="Show Stats" class="btn btn-outline-secondary">Show Stats</button>
+                    </form> </td>
+
+            </tr>
+    @endforeach
+
+
 </div>
 </body>
 

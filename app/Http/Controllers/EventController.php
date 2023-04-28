@@ -75,7 +75,7 @@ class EventController extends Controller
         }
 
 
-        return redirect()->route('events.index')->with('success', __('messages.event_successfully_updated'));
+        return redirect()->route('events.index')->with('success', __('messages.event_successfully_created'));
     }
 
     /**
@@ -83,9 +83,11 @@ class EventController extends Controller
      */
     public function show(string $id)
     {
-        $event = Event::findOrFail($id);
+        $event = Event::with('subscriptions.child')->findOrFail($id);
         $types = array_flip(Event::TYPES);
-        return view('events.show', compact('event', 'types'));
+        $subscribedChildren = $event->subscriptions->pluck('child');
+
+        return view('events.show', compact('event','subscribedChildren', 'types'));
     }
 
     /**
