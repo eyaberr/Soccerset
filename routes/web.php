@@ -27,11 +27,13 @@ Route::resource('children', ChildController::class);
 Route::resource('events', EventController::class);
 Route::resource('groups', GroupController::class);
 Route::resource('infos', InfoController::class);
-Route::resource('users', UserController::class);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

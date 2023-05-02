@@ -13,7 +13,7 @@
 </head>
 
 <body>
-
+0.2
 <div class="container mt-2">
 
     <div class="row">
@@ -102,17 +102,15 @@
                         <a class="btn btn-outline-primary" href="{{ route('events.show',$child->id) }}">Present</a>
                         <a class="btn btn-outline-danger" href="{{ route('events.show',$child->id) }}">Absent</a>
                     </form> <br>
-{{--                    @if ($child->status == 'present')--}}
-{{--                        <p>This player is present</p>--}}
-{{--                    @elseif($child->status == 'absent')--}}
-{{--                        <p>This player is absent</p>--}}
-{{--                    @endif--}}
                 </td>
-                <td><form action="{{ route('events.update', $child->id) }}" method="POST">
-                    @method('PUT')
-                    @csrf
-                        <button type="submit" name="stats" value="Show Stats" class="btn btn-outline-secondary">Show Stats</button>
-                    </form> </td>
+                <td>
+                    <form action="{{ route('events.update', $child->id) }}" method="POST" target="_blank">
+                        @method('PUT')
+                        @csrf
+                        <button type="submit" name="stats" class="btn btn-outline-secondary">Show Stats</button>
+                    </form>
+                </td>
+
 
             </tr>
     @endforeach

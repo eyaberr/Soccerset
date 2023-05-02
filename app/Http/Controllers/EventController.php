@@ -103,6 +103,7 @@ class EventController extends Controller
         return view('events.edit', compact('event', 'users', 'types', 'children', 'selectedChildrenIds'));
     }
 
+
     /**
      * Update the specified resource in storage.
      */
