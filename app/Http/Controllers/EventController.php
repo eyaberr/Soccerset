@@ -85,9 +85,10 @@ class EventController extends Controller
     {
         $event = Event::with('subscriptions.child')->findOrFail($id);
         $types = array_flip(Event::TYPES);
-        $subscribedChildren = $event->subscriptions->pluck('child');
+        $statutes = EventSubscription::STATUS;
+        //$subscribedChildren = $event->subscriptions->pluck('child');
 
-        return view('events.show', compact('event','subscribedChildren', 'types'));
+        return view('events.show', compact('event', 'types', 'statutes'));
     }
 
     /**

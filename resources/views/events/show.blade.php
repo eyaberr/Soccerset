@@ -76,7 +76,7 @@
             <td>{{$event->end_date}}</td>
         </tr>
     </table>
-<h4>Players Details</h4><br>
+    <h4>Players Details</h4><br>
     <table class="table table-bordered">
         <tr>
             <th>#</th>
@@ -90,28 +90,30 @@
             <th>Stats</th>
 
         </tr>
-        @foreach ($subscribedChildren as $child)
+        @foreach ($event->subscriptions as $subscription)
             <tr>
-                <td>{{$child->id}}</td>
-                <td>{{ $child->firstname }}</td>
-                <td>{{ $child->lastname }}</td>
+                <td>{{$subscription->child->id}}</td>
+                <td>{{ $subscription->child->firstname }}</td>
+                <td>{{ $subscription->child->lastname }}</td>
                 <td>
-                    <form action="{{ route('events.show', $child->id) }}" method="POST">
+                    <form action="{{ route('update-attendance', $subscription->id) }}" method="POST">
                         @method('PUT')
                         @csrf
-                        <a class="btn btn-outline-primary" href="{{ route('events.show',$child->id) }}">Present</a>
-                        <a class="btn btn-outline-danger" href="{{ route('events.show',$child->id) }}">Absent</a>
-                    </form> <br>
-                </td>
-                <td>
-                    <form action="{{ route('events.update', $child->id) }}" method="POST" target="_blank">
-                        @method('PUT')
-                        @csrf
-                        <button type="submit" name="stats" class="btn btn-outline-secondary">Show Stats</button>
+                        <select name="attendance" class="form-control">
+                            @foreach($statutes as $key => $value)
+                                <option value="{{$value}}">{{ $key }}</option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </td>
-
-
+                <td>
+                    <form action="#" method="POST" target="_blank">
+                        @method('PUT')
+                        @csrf
+                        <button type="submit" class="btn btn-outline-secondary">Show Stats</button>
+                    </form>
+                </td>
             </tr>
     @endforeach
 

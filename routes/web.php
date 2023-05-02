@@ -6,6 +6,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UpdateAttendanceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,7 @@ Route::resource('children', ChildController::class);
 Route::resource('events', EventController::class);
 Route::resource('groups', GroupController::class);
 Route::resource('infos', InfoController::class);
+Route::put('/update-attendance/{id}', UpdateAttendanceController::class)->name('update-attendance');
 
 
 Route::get('/dashboard', function () {

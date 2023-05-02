@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class EventSubscription extends Model
 {
     use HasFactory;
+
+    const STATUS = [
+        'not_defined' => 0,
+        'present' => 1,
+        'absent' => 2
+    ];
+
     /**
      * Get the event that owns the subscriptions.
      */
