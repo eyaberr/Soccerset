@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventSubscription;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -15,8 +16,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        $trainerId = 2;
-        $events = Event::where('user_id', $trainerId)->cursorPaginate(10);
+//        $trainerId = 2;
+        $events = Event::where('user_id', User::ROLES['trainer'])->cursorPaginate(10);
         return response()->json($events);
     }
 
@@ -44,10 +45,7 @@ class EventController extends Controller
      */
     public function show(string $id)
     {
-        $event = Event::with('subscriptions.child')->findOrFail($id);
-        $types = array_flip(Event::TYPES);
-        $statutes = EventSubscription::STATUS;
-        return response()->json([$event,$types,$statutes]);
+        return response()->json([Event::with('subscriptions.child')->findOrFail($id), Event::TYPES, EventSubscription::STATUS]);
     }
 
     /**
