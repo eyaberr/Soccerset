@@ -78,5 +78,12 @@ return [
     'medical_checkup' => 'Medical Check-up',
     'friendly_game' => 'Friendly Game',
     'show_event_title' => 'Show Event',
-    'children_of_events'=>'Training Subscription',
+    'children_of_events' => 'Training Subscriptions',
+    'players_list' => 'Players List',
+    'not_defined' => 'Not Defined',
+    'present' => 'Present',
+    'absent' => 'Absent',
+    'number_of_players' => 'Number Of Players',
+    'attendance_successfully_updated' => 'Attendance has been updated successfully.',
+    'show_stats_button' => 'Show Stats'
 ];

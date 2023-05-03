@@ -53,7 +53,7 @@
 
                 <div class="form-group">
 
-                    <strong>Event Title:</strong>
+                    <strong>{{__('messages.event_title')}}:</strong>
 
                     <input type="text" name="title" class="form-control" placeholder="Event Title">
 
@@ -72,7 +72,7 @@
 
                 <div class="form-group">
 
-                    <strong>Description:</strong>
+                    <strong>{{__('messages.event_description')}}:</strong>
 
                     <input type="text" name="description" class="form-control" placeholder="Description">
 
@@ -89,7 +89,7 @@
 
                 <div class="form-group">
 
-                    <strong>Type:</strong>
+                    <strong>{{__('messages.event_type')}}:</strong>
                     <select name="type" class="form-control">
                         @foreach($types as $key => $value)
                             <option value="{{$value}}">{{ __("messages.$key") }}</option>
@@ -129,7 +129,7 @@
 
                 <div class="form-group">
 
-                    <strong>Start Date:</strong>
+                    <strong>{{__('messages.event_start_date')}}:</strong>
                     <input type="datetime-local" name="start_date" class="form-control" placeholder="Start Date">
 
                     @error('start_date')
@@ -144,7 +144,7 @@
 
                 <div class="form-group">
 
-                    <strong>End Date:</strong>
+                    <strong>{{__('messages.event_end_date')}}:</strong>
                     <input type="datetime-local" name="end_date" class="form-control" placeholder="End Date">
 
                     @error('end_date')
@@ -158,7 +158,7 @@
             <div class="col-xs-6 col-sm-6 col-md-6">
                 <div class="form-group">
 
-                    <strong>Players list:</strong>
+                    <strong>{{__('messages.players_list')}}:</strong>
                     <select name="children[]" multiple class="form-control">
                         @foreach($children as $child)
                             <option value="{{$child->id}}">{{$child->firstname}} {{$child->lastname}}</option>
@@ -176,7 +176,7 @@
         <br>
         <div class="col-xs-6 col-sm-6 col-md-6">
 
-            <button type="submit" class="btn btn-primary ml-3">Submit</button>
+            <button type="submit" class="btn btn-primary ml-3">{{__('messages.submit_button')}}</button>
 
         </div>
     </form>

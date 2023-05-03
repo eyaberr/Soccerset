@@ -152,7 +152,8 @@
                     <strong>Players list:</strong>
                     <select name="children[]" multiple class="form-control">
                         @foreach($children as $child)
-                            <option @if(in_array($child->id, $selectedChildrenIds)) selected @endif value="{{$child->id}}">{{$child->firstname}} {{$child->lastname}}</option>
+                            <option @if(in_array($child->id, $selectedChildrenIds)) selected
+                                    @endif value="{{$child->id}}">{{$child->firstname}} {{$child->lastname}}</option>
                         @endforeach
                     </select>
                     @error('children')
