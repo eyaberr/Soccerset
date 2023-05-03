@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
 use App\Models\EventSubscription;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UpdateAttendanceController extends Controller
 {
@@ -13,16 +13,14 @@ class UpdateAttendanceController extends Controller
      */
     public function __invoke(Request $request, $id)
     {
-        $event = Event::findOrFail($id);
-        $child_id = $request->input('child_id');
+        $request->validate([
+            'attendance' => 'required|integer|' . Rule::in(EventSubscription::STATUS)
+        ]);
+        $eventSubscription = EventSubscription::findOrFail($id);
+        $eventSubscription->attendance = $request->input('attendance') == EventSubscription::STATUS['not_defined'] ? null : $request->input('attendance');
+        $eventSubscription->save();
 
-        $subscription = EventSubscription::where('event_id', $event->id)
-            ->where('child_id', $child_id)
-            ->firstOrFail();
-
-        $subscription->presence = $request->input('attendance');
-        $subscription->save();
-
-        return redirect()->back()->with('success', 'Attendance updated successfully.');
+        return redirect()->back()
+            ->with('success', __('messages.attendance_successfully_updated'));
     }
 }

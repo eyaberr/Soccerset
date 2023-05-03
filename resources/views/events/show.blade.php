@@ -13,7 +13,6 @@
 </head>
 
 <body>
-0.2
 <div class="container mt-2">
 
     <div class="row">
@@ -42,7 +41,6 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-
 
     <table class="table table-bordered">
         <tr>
@@ -101,17 +99,23 @@
                         @csrf
                         <select name="attendance" class="form-control">
                             @foreach($statutes as $key => $value)
-                                <option value="{{$value}}">{{ $key }}</option>
+                                <option
+                                    @if(isset($subscription->attendance) && $subscription->attendance===$value)
+                                    selected
+                                    @endif
+                                    value="{{$value}}"
+                                >{{ __("messages.$key") }}</option>
                             @endforeach
                         </select>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">{{__('messages.submit_button')}}</button>
                     </form>
                 </td>
                 <td>
                     <form action="#" method="POST" target="_blank">
                         @method('PUT')
                         @csrf
-                        <button type="submit" class="btn btn-outline-secondary">Show Stats</button>
+                        <button type="submit"
+                                class="btn btn-outline-secondary">{{__('messages.show_stats_button')}}</button>
                     </form>
                 </td>
             </tr>
