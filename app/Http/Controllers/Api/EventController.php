@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventSubscription;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -16,8 +15,7 @@ class EventController extends Controller
      */
     public function index()
     {
-//        $trainerId = 2;
-        $events = Event::where('user_id', User::ROLES['trainer'])->cursorPaginate(10);
+        $events = Event::cursorPaginate(10);
         return response()->json($events);
     }
 
@@ -29,14 +27,21 @@ class EventController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'type' => 'required|integer|in:' . Rule::in(Event::TYPES),
+            'type' => 'required|integer|' . Rule::in(Event::TYPES),
             'trainer' => 'required|string|max:255|exists:users,id',
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date',
             'children' => 'array|exists:children,id'
         ]);
+
+
         $event = new Event();
-        $event->fill($request->all());
+        $event->title = $request->input('title');
+        $event->description = $request->input('description');
+        $event->type = $request->input('type');
+        $event->user_id = $request->input('trainer');
+        $event->start_date = $request->input('start_date');
+        $event->end_date = $request->input('end_date');
         $event->save();
     }
 
@@ -45,7 +50,14 @@ class EventController extends Controller
      */
     public function show(string $id)
     {
-        return response()->json([Event::with('subscriptions.child')->findOrFail($id), Event::TYPES, EventSubscription::STATUS]);
+        $event = Event::with('subscriptions.child')->findOrFail($id);
+        $statutes = EventSubscription::STATUS;
+        $types = Event::TYPES;
+        return response()->json([
+            'event' => $event,
+            'statutes' => $statutes,
+            'types' => $types,
+        ]);
     }
 
     /**

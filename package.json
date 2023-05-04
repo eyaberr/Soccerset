@@ -23,6 +23,7 @@
         "@fullcalendar/list": "^6.1.6",
         "@fullcalendar/multimonth": "^6.1.6",
         "@fullcalendar/scrollgrid": "^6.1.6",
-        "@fullcalendar/timegrid": "^6.1.6"
+        "@fullcalendar/timegrid": "^6.1.6",
+        "fullcalendar": "^6.1.6"
     }
 }
