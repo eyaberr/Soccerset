@@ -85,5 +85,6 @@ return [
     'absent' => 'Absent',
     'number_of_players' => 'Number Of Players',
     'attendance_successfully_updated' => 'Attendance has been updated successfully.',
-    'show_stats_button' => 'Show Stats'
+    'show_stats_button' => 'Show Stats',
+
 ];

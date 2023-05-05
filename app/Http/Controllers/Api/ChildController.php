@@ -13,8 +13,8 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $parentId=4;
-        $children = Child::where('user_id',$parentId)->cursorPaginate(10);
+        $parentId = 4;
+        $children = Child::where('user_id', $parentId)->cursorPaginate(10);
         return response()->json($children);
     }
 
@@ -26,7 +26,7 @@ class ChildController extends Controller
         $request->validate([
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
-            'parent' => 'required|string|max:255|exists:users,id',
+            'parent' => 'required|string|exists:users,id',
             'age' => 'required|string|max:255',
         ]);
 
@@ -37,14 +37,17 @@ class ChildController extends Controller
             'age' => $request->get('age'),
         ]);
 
-        $child->save();    }
+        $child->save();
+        return response()->json($child);
+    }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $child = Child::findOrFail($id);
+        return response()->json($child);
     }
 
     /**

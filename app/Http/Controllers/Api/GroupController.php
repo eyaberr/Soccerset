@@ -33,6 +33,7 @@ class GroupController extends Controller
         $group->number_of_players = $request->input('number_of_players');
         $group->save();
         $group->children()->sync($request->input('children'));
+        return response()->json($group);
 
     }
 

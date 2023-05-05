@@ -43,6 +43,8 @@ class EventController extends Controller
         $event->start_date = $request->input('start_date');
         $event->end_date = $request->input('end_date');
         $event->save();
+        return response()->json($event);
+
     }
 
     /**
