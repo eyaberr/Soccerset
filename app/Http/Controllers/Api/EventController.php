@@ -53,12 +53,8 @@ class EventController extends Controller
     public function show(string $id)
     {
         $event = Event::with('subscriptions.child')->findOrFail($id);
-        $statutes = EventSubscription::STATUS;
-        $types = Event::TYPES;
         return response()->json([
             'event' => $event,
-            'statutes' => $statutes,
-            'types' => $types,
         ]);
     }
 
@@ -67,7 +63,25 @@ class EventController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'type' => 'required|integer|' . Rule::in(Event::TYPES),
+            'trainer' => 'required|string|max:255|exists:users,id',
+            'start_date' => 'required|date|before:end_date',
+            'end_date' => 'required|date',
+            'children' => 'array|exists:children,id'
+        ]);
+        $event = Event::with('subscriptions')->findOrFail($id);
+        $event->title = $request->input('title');
+        $event->description = $request->input('description');
+        $event->type = $request->input('type');
+        $event->user_id = $request->input('trainer');
+        $event->start_date = $request->input('start_date');
+        $event->end_date = $request->input('end_date');
+        $event->save();
+
+        return ["Event"=>"Event has been updated"];
     }
 
     /**
@@ -75,6 +89,9 @@ class EventController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $event = Event::findOrFail($id);
+        $event->delete();
+
+        return ["Event"=>"Event has been deleted"];
     }
 }

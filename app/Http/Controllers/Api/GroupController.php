@@ -33,7 +33,7 @@ class GroupController extends Controller
         $group->number_of_players = $request->input('number_of_players');
         $group->save();
         $group->children()->sync($request->input('children'));
-        return response()->json($group);
+        return ["GROUP"=>"Group has been saved"];
 
     }
 
@@ -55,7 +55,18 @@ class GroupController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'number_of_players' => 'required|integer',
+            'children' => 'required|array|exists:children,id',
+        ]);
+        $group = Group::findOrFail($id);
+        $group->name = $request->input('name');
+        $group->number_of_players = $request->input('number_of_players');
+        $group->save();
+
+        $group->children()->sync($request->input('children'));
+        return ["GROUP"=>"Group has been updated"];
     }
 
     /**
@@ -63,6 +74,9 @@ class GroupController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $group = Group::findOrFail($id);
+        $group->delete();
+
+        return ["Group"=>"Group has been deleted"];
     }
 }
