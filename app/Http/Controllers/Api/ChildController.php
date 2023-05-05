@@ -55,7 +55,19 @@ class ChildController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+        'firstname' => 'string|max:255',
+        'lastname' => 'string|max:255',
+        'age' => 'string|max:255',
+    ]);
+
+    $child = Child::findOrFail($id);
+    $child->firstname = $request->get('firstname', $child->firstname);
+    $child->lastname = $request->get('lastname', $child->lastname);
+    $child->age = $request->get('age', $child->age);
+    $child->save();
+
+    return response()->json($child);
     }
 
     /**
@@ -63,6 +75,9 @@ class ChildController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $child = Child::findOrFail($id);
+        $child->delete();
+
+        return ["Child"=>"Child has been deleted"];
     }
 }
