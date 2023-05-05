@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ChildController;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\GroupController;
 use Illuminate\Http\Request;
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('events', EventController::class);
 Route::apiResource('groups', GroupController::class);
+Route::apiResource('children', ChildController::class);
