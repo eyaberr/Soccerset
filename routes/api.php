@@ -21,19 +21,19 @@ use Illuminate\Support\Facades\Route;
 
 
 
-//Route::apiResource('events', EventController::class);
+
 //Route::apiResource('groups', GroupController::class);
 //Route::apiResource('children', ChildController::class);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-
-Route::get('/users', [AuthController::class, 'index']);
-Route::apiResource('users', UserController::class);
+//Route::get('/users', [AuthController::class, 'index']);
 
 
- Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-     return $request->user();
- });
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+Route::get('/users/events', [UserController::class, 'show'])->middleware('auth:sanctum');
 
 //Route::group(['middleware' => ['auth:sanctum']], function () {
 //    Route::get('/users', [AuthController::class, 'index']);
