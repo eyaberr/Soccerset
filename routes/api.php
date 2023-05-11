@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\ChildController;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\GroupController;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\TrainerEventsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +20,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
-
 //Route::apiResource('groups', GroupController::class);
 //Route::apiResource('children', ChildController::class);
 Route::post('/register', [AuthController::class, 'register']);
@@ -33,14 +31,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/users/events', [UserController::class, 'show'])->middleware('auth:sanctum');
-
+Route::get('/users/events', [TrainerEventsController::class, 'show'])->middleware('auth:sanctum');
 //Route::group(['middleware' => ['auth:sanctum']], function () {
 //    Route::get('/users', [AuthController::class, 'index']);
 //});
 
-//TODO connected as a trainer => list of events assigned to that trainer
-//TODO connected as a parents => list of events assigned to their children
-//TODO connected as a parents or trainers => GET event details
+//TODO connected as a trainer => list of events assigned to that trainer : DONE
+//TODO connected as a parent => list of events assigned to their children : DONE
+//TODO connected as a parent or trainer => GET event details
 //TODO connected as a trainer => PUT update event subscription two possible parameters boolean attendance  json stats
 

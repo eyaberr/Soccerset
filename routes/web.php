@@ -27,7 +27,7 @@ Route::resource('users', UserController::class);
 Route::resource('children', ChildController::class);
 Route::resource('events', EventController::class);
 Route::resource('groups', GroupController::class);
-Route::resource('infos', InfoController::class);
+//Route::resource('infos', InfoController::class);
 Route::put('/update-attendance/{id}', UpdateAttendanceController::class)->name('update-attendance');
 
 

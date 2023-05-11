@@ -9,7 +9,7 @@ use Illuminate\Http\Client\HttpClientException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class TrainerEventsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +18,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::where('role_id', User::ROLES['trainer'])
-            ->orWhere('role_id', User::ROLES['parent'])
-            ->get();
+        $users = User::whereIn('role_id',[ User::ROLES['trainer'],User::ROLES['parent']])->get();
 
         return response()->json($users);
     }
@@ -32,18 +30,20 @@ class UserController extends Controller
     {
         try {
             $user = Auth::user();
-            // check if user is a trainer
+            // check if user is a Parent
             if ($user->role_id !== User::ROLES['trainer']) {
-                throw new \Exception('this user is not a trainer', 422);
+           //  throw new \Exception('this user is not a trainer', 422);
+                $user = User::with('children.subscriptions.event')->findOrFail($user->id);
+            } else {
+                $user = User::with('events')->findOrFail($user->id);
             }
-            $user = User::with('events')->findOrFail($user->id);
             return response()->json([
                 'user' => $user,
             ]);
         } catch (\Exception $e) {
-            return \response()->json([
+            return response()->json([
                 'message' => $e->getMessage(),
-            ], $e->getCode());
+            ], $e->getCode() ?: 500);
         }
     }
 
@@ -52,7 +52,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-      //
+        //
     }
 
     /**
