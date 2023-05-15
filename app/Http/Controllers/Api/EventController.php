@@ -37,6 +37,7 @@ class EventController extends Controller
             ], $e->getCode() ?: 500);
         }
     }
+
     /**
      * Display the specified resource.
      */
@@ -44,40 +45,27 @@ class EventController extends Controller
     {
         $user = Auth::user();
         if ($user->role_id === User::ROLES['trainer']) {
-            $event = Event::with('subscriptions')->where('user_id', $user->id)->find($id);
-
-            if (!$event){
-                return response()->json([
-                   'error'=> 'Event Not Found',
-                ], 404);
-            }
-        } else {
-            $event = $user->event;
+            $event = Event::with('subscriptions')->where('user_id', $user->id)->findOrFail($id);
+        }
+        if ($user->role_id === User::ROLES['parent']) {
+            $childrenIds = $user->children->pluck('id')->toArray();
+            $event = Event::whereHas('subscriptions', function (Builder $query) use ($childrenIds) {
+                $query->whereIn('child_id', $childrenIds);
+            })->with(['subscriptions' => function ($query) use ($childrenIds) {
+                $query->whereIn('child_id', $childrenIds)->with('child');
+            }])->findOrFail($id);
         }
         return response()->json([
             'event' => $event,
         ]);
     }
+
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request)
     {
-        $user = Auth::user();
-        $request->validate([
-            'attendance' => 'required|boolean',
-            'stats' => 'required|json'
-        ]);
-        if ($user->role_id !== User::ROLES['trainer']) {
-            throw new \Exception('this user is not a trainer', 422);
-        }
 
-            foreach ($user->event->subscriptions as $subscription) {
-
-            }
-        return response()->json([
-            'event' => $user->event
-        ]);
     }
 
 }

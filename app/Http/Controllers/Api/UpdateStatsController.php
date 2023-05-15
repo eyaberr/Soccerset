@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class UpdateOnlyStatsController extends Controller
+class UpdateStatsController extends Controller
 {
     /**
      * Handle the incoming request.
