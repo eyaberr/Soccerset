@@ -16,6 +16,10 @@ class EventSubscription extends Model
         'absent' => 2
     ];
 
+    protected $casts = [
+        'stats' => 'array'
+    ];
+
     /**
      * Get the event that owns the subscriptions.
      */

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\GroupController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UpdateAttendanceController;
+use App\Http\Controllers\Api\UpdateStatsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +39,7 @@ Route::get('/users/events', [EventController::class, 'index'])->middleware('auth
 
 Route::get('/users/events/{id}', [EventController::class, 'show'])->middleware('auth:sanctum');
 Route::put('/trainer/events/update-attendance/{id}', [UpdateAttendanceController::class, '__invoke'])->middleware('auth:sanctum');
-Route::put('/trainer/events/update-stats/{id}', [UpdateAttendanceController::class, '__invoke'])->middleware('auth:sanctum');
+Route::put('/trainer/events/update-stats/{id}', [UpdateStatsController::class, '__invoke'])->middleware('auth:sanctum');
 
 //TODO connected as a trainer => list of events assigned to that trainer : DONE
 //TODO connected as a parent => list of events assigned to their children : DONE
