@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventSubscription;
 use App\Models\User;
+use http\Env\Response;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +42,18 @@ class EventController extends Controller
      */
     public function show(string $id)
     {
-        $event = Event::with('subscriptions')->findOrFail($id);
+        $user = Auth::user();
+        if ($user->role_id === User::ROLES['trainer']) {
+            $event = Event::with('subscriptions')->where('user_id', $user->id)->find($id);
+
+            if (!$event){
+                return response()->json([
+                   'error'=> 'Event Not Found',
+                ], 404);
+            }
+        } else {
+            $event = $user->event;
+        }
         return response()->json([
             'event' => $event,
         ]);
@@ -49,27 +61,22 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         $user = Auth::user();
         $request->validate([
             'attendance' => 'required|boolean',
             'stats' => 'required|json'
         ]);
-        $updatedEvents = collect();
         if ($user->role_id !== User::ROLES['trainer']) {
             throw new \Exception('this user is not a trainer', 422);
         }
-        foreach ($user->events as $event) {
-            foreach ($event->subscriptions as $subscription) {
-                $subscription->attendance = $request->input('attendance', $subscription->attendance);
-                $subscription->stats = $request->input('stats', $subscription->stats);
-                $subscription->save();
+
+            foreach ($user->event->subscriptions as $subscription) {
+
             }
-            $updatedEvents->push($event->refresh());
-        }
         return response()->json([
-            'events' => $updatedEvents,
+            'event' => $user->event
         ]);
     }
 

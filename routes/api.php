@@ -37,7 +37,6 @@ Route::get('/users/events', [EventController::class, 'index'])->middleware('auth
 
 Route::get('/users/events/{id}', [EventController::class, 'show'])->middleware('auth:sanctum');
 Route::put('/trainer/events', [EventController::class, 'update'])->middleware('auth:sanctum');
-Route::delete('/trainer/events/{id}', [EventController::class, 'destroy'])->middleware('auth:sanctum');
 
 //TODO connected as a trainer => list of events assigned to that trainer : DONE
 //TODO connected as a parent => list of events assigned to their children : DONE
